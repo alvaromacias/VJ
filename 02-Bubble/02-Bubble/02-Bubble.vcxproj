@@ -63,8 +63,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Users\marta\Documents\uni\vj\libs\Simple OpenGL Image Library\projects\VC9\Debug;C:\Users\marta\Documents\uni\vj\libs\Simple OpenGL Image Library\src;C:\Users\marta\Documents\uni\vj\libs\glm;C:\Users\marta\Documents\uni\vj\libs\freetype-2.3.5-1-bin\include;C:\Users\marta\Documents\uni\vj\libs\freeglut\include;C:\Users\marta\Documents\uni\vj\libs\glew-1.13.0\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\marta\Documents\uni\vj\libs\freeglut\lib;C:\Users\marta\Documents\uni\vj\libs\glew-1.13.0\lib\Release\Win32;C:\Users\marta\Documents\uni\vj\libs\Simple OpenGL Image Library\projects\VC9\Debug;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\alvaro\Source\Repos\VJ\libs\glm;C:\Users\alvaro\Source\Repos\VJ\libs\Simple OpenGL Image Library\src;C:\Users\alvaro\Source\Repos\VJ\libs\glew-1.13.0\include;C:\Users\alvaro\Source\Repos\VJ\libs\freetype-2.3.5-1-bin\include;C:\Users\alvaro\Source\Repos\VJ\libs\freeglut\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\alvaro\Source\Repos\VJ\libs\freeglut\lib;C:\Users\alvaro\Source\Repos\VJ\libs\glew-1.13.0\lib\Release\Win32;C:\Users\alvaro\Source\Repos\VJ\libs\Simple OpenGL Image Library\projects\VC9\Debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
