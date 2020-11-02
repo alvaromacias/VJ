@@ -25,13 +25,19 @@ public:
 
 private:
 	void initShaders();
+	void createBlockMap(const string &levelFile);
+	void createBlockSprites();
+	void renderBlocks();
 
 private:
 	TileMap *map;
+	int *blockMap;
 	Player *player;
+	vector<Sprite> blocks;
 	ShaderProgram texProgram;
 	float currentTime;
 	glm::mat4 projection;
+	Texture spritesheet;
 
 };
 
