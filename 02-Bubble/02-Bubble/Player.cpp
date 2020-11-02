@@ -21,7 +21,7 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 {
 	bJumping = false;
 	spritesheet.loadFromFile("images/barra(2).png", TEXTURE_PIXEL_FORMAT_RGBA);
-	sprite = Sprite::createSprite(glm::ivec2(48, 64), glm::vec2(0.5, 0.5), &spritesheet, &shaderProgram);
+	sprite = Sprite::createSprite(glm::ivec2(48, 48), glm::vec2(0.5, 0.5), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(4);
 	
 		sprite->setAnimationSpeed(STAND_LEFT, 8);
@@ -75,7 +75,7 @@ void Player::update(int deltaTime)
 		if (posPlayer.y > 32) posPlayer.y -= 2;
 	}
 	else if (Game::instance().getSpecialKey(GLUT_KEY_DOWN)) {
-		if (posPlayer.y < 320) posPlayer.y += 2;
+		if (posPlayer.y < 336) posPlayer.y += 2;
 	}
 	else
 	{

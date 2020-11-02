@@ -13,7 +13,7 @@
 #define SCREEN_Y 16
 
 #define INIT_PLAYER_X_TILES 11
-#define INIT_PLAYER_Y_TILES 20
+#define INIT_PLAYER_Y_TILES 21
 
 
 Scene::Scene()
@@ -104,7 +104,7 @@ void Scene::createBlockSprites() {
 					spritePos.y = (blockMap[j * 24 + i] - 16)/16;
 				}
 				Sprite *sprite = Sprite::createSprite(glm::ivec2(16, 8), glm::vec2(1/16, 0.5), &spritesheet, &texProgram);
-				sprite->setPosition(glm::vec2(i, j));
+				sprite->setPosition(glm::vec2(16*i, 16*j));
 				blocks.push_back(*sprite);
 			}
 		}
