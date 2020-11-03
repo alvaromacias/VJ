@@ -36,7 +36,12 @@ void Scene::init()
 	initShaders();
 	map = TileMap::createTileMap("levels/background.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 	createBlockMap("levels/level1_1.txt");
-	createBlockSprites();
+	createBlockSprites(blocks_1);
+	createBlockMap("levels/level1_2.txt");
+	createBlockSprites(blocks_2);
+	createBlockMap("levels/level1_3.txt");
+	createBlockSprites(blocks_3);
+	setPantalla(1);
 	player = new Player();
 	player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
@@ -94,7 +99,7 @@ void Scene::createBlockMap(const string &levelFile) {
 
 }
 
-void Scene::createBlockSprites() {
+void Scene::createBlockSprites(vector<Sprite> &blocks) {
 	glm::vec2 spritePos;
 	blocks = vector<Sprite>();
 	spritesheet.loadFromFile("images/sprites.png", TEXTURE_PIXEL_FORMAT_RGBA);
@@ -161,15 +166,21 @@ void Scene::render()
 	texProgram.setUniformMatrix4f("modelview", modelview);
 	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
 	map->render();
-	renderBlocks();
+	if (pantalla == 1) renderBlocks(blocks_1);
+	else if (pantalla == 2) renderBlocks(blocks_2);
+	else if (pantalla ==3) renderBlocks(blocks_3);
 	player->render();
 	ball->render();
 }
 
-void Scene::renderBlocks() {
+void Scene::renderBlocks(vector<Sprite> &blocks) {
 	for (int i = 0; i < blocks.size(); ++i) {
 		blocks[i].render();
 	}
+}
+
+void Scene::setPantalla(int n) {
+	pantalla = n;
 }
 
 void Scene::initShaders()
