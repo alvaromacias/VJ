@@ -104,6 +104,17 @@ void Scene::createBlockSprites() {
 					spritePos.x = (blockMap[j * 24 + i] - 17.f) / 16.f;
 					spritePos.y = 0.5f;
 				}
+				//crea sprites de diners, alarm, telefon/calculadora el q sigui i clau (blocs de 32x32)
+				if (blockMap[j * 24 + i] == 5 || blockMap[j * 24 + i] == 7 || blockMap[j * 24 + i] == 9 || blockMap[j * 24 + i] == 11 || blockMap[j * 24 + i] == 13) {
+					Sprite *sprite = Sprite::createSprite(glm::ivec2(32, 32), glm::vec2(0.125f, 1.f), &spritesheet, &texProgram);
+					sprite->setPosition(glm::vec2(16 * i + 32, 16 * j + 16));
+					sprite->setNumberAnimations(1);
+					sprite->setAnimationSpeed(0, 8);
+					sprite->addKeyframe(0, spritePos);
+					sprite->changeAnimation(0);
+					blocks.push_back(*sprite);
+				}
+				//crea sprites de la pared (blocs grocs) (blocs de 16x16)
 				if (blockMap[j * 24 + i] == 15) {
 					Sprite *sprite = Sprite::createSprite(glm::ivec2(16, 16), glm::vec2(0.125f, 1.f), &spritesheet, &texProgram);
 					sprite->setPosition(glm::vec2(16 * i + 32, 16 * j + 16));
@@ -113,19 +124,11 @@ void Scene::createBlockSprites() {
 					sprite->changeAnimation(0);
 					blocks.push_back(*sprite);
 				}
-				else if (blockMap[j * 24 + i] != 13) {
+				//crea els ladrillos destruibles (blocs de 32x16)
+				else {
 					Sprite *sprite = Sprite::createSprite(glm::vec2(32, 16), glm::vec2(0.125f, 0.5f), &spritesheet, &texProgram);
 					sprite->setPosition(glm::vec2(16 * i + 32, 16 * j + 16));
 					sprite->setNumberAnimations(1);
-					sprite->addKeyframe(0, spritePos);
-					sprite->changeAnimation(0);
-					blocks.push_back(*sprite);
-				}
-				else {
-					Sprite *sprite = Sprite::createSprite(glm::ivec2(32, 32), glm::vec2(0.125f, 1.f), &spritesheet, &texProgram);
-					sprite->setPosition(glm::vec2(16 * i + 32, 16 * j + 16));
-					sprite->setNumberAnimations(1);
-					sprite->setAnimationSpeed(0, 8);
 					sprite->addKeyframe(0, spritePos);
 					sprite->changeAnimation(0);
 					blocks.push_back(*sprite);
