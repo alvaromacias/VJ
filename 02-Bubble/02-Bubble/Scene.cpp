@@ -92,60 +92,43 @@ void Scene::createBlockMap(const string &levelFile) {
 void Scene::createBlockSprites() {
 	glm::vec2 spritePos;
 	blocks = vector<Sprite>();
-	spritesheet.loadFromFile("images/sprites(2).png", TEXTURE_PIXEL_FORMAT_RGBA);
+	spritesheet.loadFromFile("images/sprites.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	for (int i = 0; i < 24; ++i) {
 		for (int j = 0; j < 24; ++j) {
 			if (blockMap[j * 24 + i] % 2 != 0 && blockMap[j * 24 + i] != 29) {
 				if (blockMap[j * 24 + i] < 16) {
-					spritePos.x = blockMap[j * 24 + i] / 16;
-					spritePos.y = 0;
+					spritePos.x = (blockMap[j * 24 + i]-1.f) / 16.f;
+					spritePos.y = 0.f;
 				}
 				else {
-					spritePos.x = (blockMap[j * 24 + i] - 16) / 16;
-					spritePos.y = 0.5;
+					spritePos.x = (blockMap[j * 24 + i] - 17.f) / 16.f;
+					spritePos.y = 0.5f;
 				}
 				if (blockMap[j * 24 + i] == 15) {
-					Sprite *sprite = Sprite::createSprite(glm::ivec2(16, 16), glm::vec2(1 / 16, 0.5), &spritesheet, &texProgram);
-					sprite->setPosition(glm::vec2(16 * i + 32, 16 * j + 16));
-					sprite->setNumberAnimations(1);
-					sprite->addKeyframe(1, spritePos);
-					blocks.push_back(*sprite);
-				}
-				else if (blockMap[j * 24 + i] != 13) {
-					Sprite *sprite = Sprite::createSprite(glm::ivec2(16, 16), glm::vec2(1 / 16, 0.5), &spritesheet, &texProgram);
-					sprite->setPosition(glm::vec2(16 * i + 32, 16 * j + 16));
-					sprite->setNumberAnimations(1);
-					sprite->addKeyframe(1, spritePos);
-					blocks.push_back(*sprite);
-					Sprite *sprite_d = Sprite::createSprite(glm::ivec2(16, 16), glm::vec2(1 / 16, 0.5), &spritesheet, &texProgram);
-					sprite_d->setPosition(glm::vec2(16 * i + 48, 16 * j + 16));
-					sprite_d->setNumberAnimations(1);
-					sprite_d->addKeyframe(1, glm::vec2(spritePos.x + 1, spritePos.y));
-					blocks.push_back(*sprite_d);
-				}
-				else {
-					Sprite *sprite = Sprite::createSprite(glm::ivec2(16, 16), glm::vec2(1 / 16, 0.5), &spritesheet, &texProgram);
+					Sprite *sprite = Sprite::createSprite(glm::ivec2(16, 16), glm::vec2(0.125f, 1.f), &spritesheet, &texProgram);
 					sprite->setPosition(glm::vec2(16 * i + 32, 16 * j + 16));
 					sprite->setNumberAnimations(1);
 					sprite->setAnimationSpeed(0, 8);
-					sprite->addKeyframe(0, glm::vec2(1 - 1 / 8, 0.f));
+					sprite->addKeyframe(0, spritePos);
 					sprite->changeAnimation(0);
 					blocks.push_back(*sprite);
-					Sprite *sprite_d = Sprite::createSprite(glm::ivec2(16, 16), glm::vec2(1 / 16, 0.5), &spritesheet, &texProgram);
-					sprite_d->setPosition(glm::vec2(16 * i + 48, 16 * j + 16));
-					sprite_d->setNumberAnimations(1);
-					sprite_d->addKeyframe(1, glm::vec2(spritePos.x + 1, spritePos.y));
-					blocks.push_back(*sprite_d);
-					Sprite *sprite_i = Sprite::createSprite(glm::ivec2(16, 16), glm::vec2(1 / 16, 0.5), &spritesheet, &texProgram);
-					sprite_i->setPosition(glm::vec2(16 * i + 32, 16 * j + 32));
-					sprite_i->setNumberAnimations(1);
-					sprite_i->addKeyframe(1, glm::vec2(spritePos.x, spritePos.y + 1));
-					blocks.push_back(*sprite_i);
-					Sprite *sprite_id = Sprite::createSprite(glm::ivec2(16, 16), glm::vec2(1 / 16, 0.5), &spritesheet, &texProgram);
-					sprite_id->setPosition(glm::vec2(16 * i + 48, 16 * j + 32));
-					sprite_id->setNumberAnimations(1);
-					sprite_id->addKeyframe(1, glm::vec2(spritePos.x + 1, spritePos.y + 1));
-					blocks.push_back(*sprite_id);
+				}
+				else if (blockMap[j * 24 + i] != 13) {
+					Sprite *sprite = Sprite::createSprite(glm::vec2(32, 16), glm::vec2(0.125f, 0.5f), &spritesheet, &texProgram);
+					sprite->setPosition(glm::vec2(16 * i + 32, 16 * j + 16));
+					sprite->setNumberAnimations(1);
+					sprite->addKeyframe(0, spritePos);
+					sprite->changeAnimation(0);
+					blocks.push_back(*sprite);
+				}
+				else {
+					Sprite *sprite = Sprite::createSprite(glm::ivec2(32, 32), glm::vec2(0.125f, 1.f), &spritesheet, &texProgram);
+					sprite->setPosition(glm::vec2(16 * i + 32, 16 * j + 16));
+					sprite->setNumberAnimations(1);
+					sprite->setAnimationSpeed(0, 8);
+					sprite->addKeyframe(0, spritePos);
+					sprite->changeAnimation(0);
+					blocks.push_back(*sprite);
 				}
 			}
 		}
