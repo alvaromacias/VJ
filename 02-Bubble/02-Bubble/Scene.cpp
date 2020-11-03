@@ -24,9 +24,9 @@ Scene::Scene()
 
 Scene::~Scene()
 {
-	if(map != NULL)
+	if (map != NULL)
 		delete map;
-	if(player != NULL)
+	if (player != NULL)
 		delete player;
 }
 
@@ -76,13 +76,13 @@ void Scene::createBlockMap(const string &levelFile) {
 	sstream >> spriteSize.x >> spriteSize.y;
 	spriteSize = glm::vec2(1.f / spriteSize.x, 1.f / spriteSize.y);
 
-	
+
 	blockMap = new int[mapSize.x * mapSize.y];
-	for (int j = 0; j<mapSize.y; j++)
+	for (int j = 0; j < mapSize.y; j++)
 	{
 		getline(fin, line);
 		sstream.str(line);
-		for (int i = 0; i<mapSize.x; i++)
+		for (int i = 0; i < mapSize.x; i++)
 		{
 			sstream >> blockMap[j*mapSize.x + i];
 		}
@@ -97,20 +97,47 @@ void Scene::createBlockMap(const string &levelFile) {
 void Scene::createBlockSprites() {
 	glm::vec2 spritePos;
 	blocks = vector<Sprite>();
+	spritesheet.loadFromFile("images/sprites.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	for (int i = 0; i < 24; ++i) {
 		for (int j = 0; j < 24; ++j) {
 			if (blockMap[j * 24 + i] % 2 != 0 && blockMap[j * 24 + i] != 29) {
 				if (blockMap[j * 24 + i] < 16) {
-					spritePos.x = 0;
-					spritePos.y = blockMap[j * 24 + i]/16;
+					spritePos.x = (blockMap[j * 24 + i]-1.f) / 16.f;
+					spritePos.y = 0.f;
 				}
 				else {
-					spritePos.x = 0.5;
-					spritePos.y = (blockMap[j * 24 + i] - 16)/16;
+					spritePos.x = (blockMap[j * 24 + i] - 17.f) / 16.f;
+					spritePos.y = 0.5f;
 				}
-				Sprite *sprite = Sprite::createSprite(glm::ivec2(16, 8), glm::vec2(1/16, 0.5), &spritesheet, &texProgram);
-				sprite->setPosition(glm::vec2(16*i, 16*j));
-				blocks.push_back(*sprite);
+				//crea sprites de diners, alarm, telefon/calculadora el q sigui i clau (blocs de 32x32)
+				if (blockMap[j * 24 + i] == 5 || blockMap[j * 24 + i] == 7 || blockMap[j * 24 + i] == 9 || blockMap[j * 24 + i] == 11 || blockMap[j * 24 + i] == 13) {
+					Sprite *sprite = Sprite::createSprite(glm::ivec2(32, 32), glm::vec2(0.125f, 1.f), &spritesheet, &texProgram);
+					sprite->setPosition(glm::vec2(16 * i + 32, 16 * j + 16));
+					sprite->setNumberAnimations(1);
+					sprite->setAnimationSpeed(0, 8);
+					sprite->addKeyframe(0, spritePos);
+					sprite->changeAnimation(0);
+					blocks.push_back(*sprite);
+				}
+				//crea sprites de la pared (blocs grocs) (blocs de 16x16)
+				if (blockMap[j * 24 + i] == 15) {
+					Sprite *sprite = Sprite::createSprite(glm::ivec2(16, 16), glm::vec2(0.125f, 1.f), &spritesheet, &texProgram);
+					sprite->setPosition(glm::vec2(16 * i + 32, 16 * j + 16));
+					sprite->setNumberAnimations(1);
+					sprite->setAnimationSpeed(0, 8);
+					sprite->addKeyframe(0, spritePos);
+					sprite->changeAnimation(0);
+					blocks.push_back(*sprite);
+				}
+				//crea els ladrillos destruibles (blocs de 32x16)
+				else {
+					Sprite *sprite = Sprite::createSprite(glm::vec2(32, 16), glm::vec2(0.125f, 0.5f), &spritesheet, &texProgram);
+					sprite->setPosition(glm::vec2(16 * i + 32, 16 * j + 16));
+					sprite->setNumberAnimations(1);
+					sprite->addKeyframe(0, spritePos);
+					sprite->changeAnimation(0);
+					blocks.push_back(*sprite);
+				}
 			}
 		}
 	}
@@ -134,9 +161,9 @@ void Scene::render()
 	texProgram.setUniformMatrix4f("modelview", modelview);
 	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
 	map->render();
+	renderBlocks();
 	player->render();
 	ball->render();
-	renderBlocks();
 }
 
 void Scene::renderBlocks() {
@@ -150,13 +177,13 @@ void Scene::initShaders()
 	Shader vShader, fShader;
 
 	vShader.initFromFile(VERTEX_SHADER, "shaders/texture.vert");
-	if(!vShader.isCompiled())
+	if (!vShader.isCompiled())
 	{
 		cout << "Vertex Shader Error" << endl;
 		cout << "" << vShader.log() << endl << endl;
 	}
 	fShader.initFromFile(FRAGMENT_SHADER, "shaders/texture.frag");
-	if(!fShader.isCompiled())
+	if (!fShader.isCompiled())
 	{
 		cout << "Fragment Shader Error" << endl;
 		cout << "" << fShader.log() << endl << endl;
@@ -165,7 +192,7 @@ void Scene::initShaders()
 	texProgram.addShader(vShader);
 	texProgram.addShader(fShader);
 	texProgram.link();
-	if(!texProgram.isLinked())
+	if (!texProgram.isLinked())
 	{
 		cout << "Shader Linking Error" << endl;
 		cout << "" << texProgram.log() << endl << endl;

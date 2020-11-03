@@ -32,6 +32,7 @@ private:
 
 private:
 	TileMap *map;
+	string spritesheetFile;
 	int *blockMap;
 	Player *player;
 	Ball *ball;
