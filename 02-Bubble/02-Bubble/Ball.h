@@ -6,7 +6,7 @@
 #include "TileMap.h"
 
 
-// Player is basically a Sprite that represents the ball.
+// Ball is basically a Sprite that represents the ball.
 
 
 class Ball
