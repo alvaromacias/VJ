@@ -179,6 +179,12 @@ void Scene::renderBlocks(vector<Sprite> &blocks) {
 	}
 }
 
+//metode public
+void Scene::canviaPantalla(int n) {
+	setPantalla(n);
+}
+
+//metode privat
 void Scene::setPantalla(int n) {
 	pantalla = n;
 }

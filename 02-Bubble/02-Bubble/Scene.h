@@ -23,13 +23,15 @@ public:
 	void init();
 	void update(int deltaTime);
 	void render();
+	void canviaPantalla(int n);
 
 private:
 	void initShaders();
 	void createBlockMap(const string &levelFile);
 	void createBlockSprites(vector<Sprite> &);
 	void renderBlocks(vector<Sprite> &);
-	void setPantalla(int pantalla);
+	void setPantalla(int n);
+	
 
 private:
 	TileMap *map;
