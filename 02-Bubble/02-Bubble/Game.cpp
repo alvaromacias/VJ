@@ -27,6 +27,12 @@ void Game::keyPressed(int key)
 {
 	if(key == 27) // Escape code
 		bPlay = false;
+	if (key == '1')
+		scene.canviaPantalla(1);
+	if (key == '2')
+		scene.canviaPantalla(2);
+	if (key == '3')
+		scene.canviaPantalla(3);
 	keys[key] = true;
 }
 

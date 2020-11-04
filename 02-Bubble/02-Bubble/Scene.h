@@ -24,12 +24,15 @@ public:
 	void init();
 	void update(int deltaTime);
 	void render();
+	void canviaPantalla(int n);
 
 private:
 	void initShaders();
 	void createBlockMap(const string &levelFile);
-	void createBlockSprites();
-	void renderBlocks();
+	void createBlockSprites(vector<Sprite> &);
+	void renderBlocks(vector<Sprite> &);
+	void setPantalla(int n);
+	
 
 private:
 	TileMap *map;
@@ -37,11 +40,14 @@ private:
 	int *blockMap;
 	Player *player;
 	Ball *ball;
+	vector<Sprite> blocks_1;
+	vector<Sprite> blocks_2;
+	vector<Sprite> blocks_3;
 	ShaderProgram texProgram;
 	float currentTime;
 	glm::mat4 projection;
 	Texture spritesheet;
-	vector<Block> blocks;
+	int pantalla;
 
 };
 
