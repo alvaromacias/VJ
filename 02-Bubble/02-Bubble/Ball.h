@@ -5,6 +5,7 @@
 #include "Sprite.h"
 #include "TileMap.h"
 #include "Block.h"
+#include "Player.h"
 
 
 // Ball is basically a Sprite that represents the ball.
@@ -21,6 +22,7 @@ public:
 	void setTileMap(TileMap *tileMap);
 	void setPosition(const glm::vec2 &pos);
 	void setBlocks(vector<Block> &newBlocks);
+	void setPlayer(Player *newPlayer);
 
 private:
 	glm::ivec2 tileMapDispl;
@@ -30,7 +32,7 @@ private:
 	Sprite *sprite;
 	TileMap *map;
 	vector<Block> blocks;
-
+	Player *player;
 };
 
 

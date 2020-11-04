@@ -47,17 +47,15 @@ void Ball::update(int deltaTime)
 		}
 		else if (angle >= PI && angle <= 3 * PI / 2) //tercer quadrant
 		{
-			if (block.collisionMoveDown(sprite->getPosition(), glm::vec2(18, 20))) new_angle = PI - (angle - PI);
+			if (player->collisionMoveDown(sprite->getPosition(), glm::vec2(18, 20))) new_angle = PI - (angle - PI);
+			else if (block.collisionMoveDown(sprite->getPosition(), glm::vec2(18, 20))) new_angle = PI - (angle - PI);
 			else if (block.collisionMoveLeft(sprite->getPosition(), glm::vec2(18, 20))) new_angle = 2 * PI - (angle - PI);
 		}
 		else if (angle >= 3 * PI / 2) //quart quadrant
 		{
-			if (block.collisionMoveDown(sprite->getPosition(), glm::vec2(18, 20))) {
-				new_angle = 2*PI - angle;
-			}
-			else if (block.collisionMoveRight(sprite->getPosition(), glm::vec2(18, 20))) {
-				new_angle = 3 * PI / 2 - (angle - 3 * PI / 2);
-			}
+			if (player->collisionMoveDown(sprite->getPosition(), glm::vec2(18, 20))) new_angle = 2 * PI - angle;
+			if (block.collisionMoveDown(sprite->getPosition(), glm::vec2(18, 20))) new_angle = 2 * PI - angle;
+			else if (block.collisionMoveRight(sprite->getPosition(), glm::vec2(18, 20))) new_angle = 3 * PI / 2 - (angle - 3 * PI / 2);
 		}
 	}
 	if (new_angle != angle) {
@@ -87,4 +85,8 @@ void Ball::setPosition(const glm::vec2 &pos)
 void Ball::setBlocks(vector<Block> &newBlocks)
 {
 	blocks = newBlocks;
+}
+void Ball::setPlayer(Player *newPlayer)
+{
+	player = newPlayer;
 }

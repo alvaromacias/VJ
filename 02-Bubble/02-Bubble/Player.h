@@ -20,6 +20,7 @@ public:
 	
 	void setTileMap(TileMap *tileMap);
 	void setPosition(const glm::vec2 &pos);
+	bool collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &sizeNotBlock);
 	
 private:
 	bool bJumping;
@@ -28,6 +29,7 @@ private:
 	Texture spritesheet;
 	Sprite *sprite;
 	TileMap *map;
+	glm::vec2 size;
 
 };
 

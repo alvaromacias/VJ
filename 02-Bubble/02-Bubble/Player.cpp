@@ -22,6 +22,7 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 	bJumping = false;
 	spritesheet.loadFromFile("images/barra(2).png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(48, 48), glm::vec2(0.5, 0.5), &spritesheet, &shaderProgram);
+	size = glm::vec2(48, 48);
 	sprite->setNumberAnimations(4);
 	
 		sprite->setAnimationSpeed(STAND_LEFT, 8);
@@ -115,6 +116,18 @@ void Player::update(int deltaTime)
 	}*/
 	
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
+}
+
+bool Player::collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &sizeNotBlock)
+{
+	glm::vec2 posBlock = sprite->getPosition();
+	if (!(Game::instance().getSpecialKey(GLUT_KEY_DOWN)) && 
+		pos.y + sizeNotBlock.y - 1 >= posBlock.y && pos.y + sizeNotBlock.y - 1 <= posBlock.y + size.y - 1 &&
+		!(pos.x >= posBlock.x + size.x - 1 || pos.x + sizeNotBlock.x - 1 <= posBlock.x))
+	{
+		return true;
+	}
+	return false;
 }
 
 void Player::render()
