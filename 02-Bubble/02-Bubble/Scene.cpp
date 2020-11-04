@@ -43,6 +43,7 @@ void Scene::init()
 
 	createBlockMap("levels/level1_1.txt");
 	createBlockSprites(blocks_1);
+	ball->setBlocks(blocks_1);
 	createBlockMap("levels/level1_2.txt");
 	createBlockSprites(blocks_2);
 	createBlockMap("levels/level1_3.txt");
@@ -101,7 +102,7 @@ void Scene::createBlockMap(const string &levelFile) {
 
 }
 
-void Scene::createBlockSprites(vector<Sprite> &blocks) {
+void Scene::createBlockSprites(vector<Block> &blocks) {
 	glm::vec2 spritePos;
 	blocks = vector<Block>();
 	spritesheet.loadFromFile("images/sprites.png", TEXTURE_PIXEL_FORMAT_RGBA);
@@ -136,7 +137,6 @@ void Scene::createBlockSprites(vector<Sprite> &blocks) {
 			}
 		}
 	}
-	ball->setBlocks(blocks);
 }
 
 void Scene::update(int deltaTime)
@@ -164,7 +164,7 @@ void Scene::render()
 	ball->render();
 }
 
-void Scene::renderBlocks(vector<Sprite> &blocks) {
+void Scene::renderBlocks(vector<Block> &blocks) {
 	for (int i = 0; i < blocks.size(); ++i) {
 		blocks[i].render();
 	}
@@ -178,6 +178,15 @@ void Scene::canviaPantalla(int n) {
 //metode privat
 void Scene::setPantalla(int n) {
 	pantalla = n;
+	if (pantalla == 1) {
+		ball->setBlocks(blocks_1);
+	}
+	else if (pantalla == 2) {
+		ball->setBlocks(blocks_2);
+	}
+	else if (pantalla == 3) {
+		ball->setBlocks(blocks_3);
+	}
 }
 
 void Scene::initShaders()

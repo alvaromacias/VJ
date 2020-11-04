@@ -29,8 +29,8 @@ public:
 private:
 	void initShaders();
 	void createBlockMap(const string &levelFile);
-	void createBlockSprites(vector<Sprite> &);
-	void renderBlocks(vector<Sprite> &);
+	void createBlockSprites(vector<Block> &);
+	void renderBlocks(vector<Block> &);
 	void setPantalla(int n);
 	
 
@@ -40,9 +40,9 @@ private:
 	int *blockMap;
 	Player *player;
 	Ball *ball;
-	vector<Sprite> blocks_1;
-	vector<Sprite> blocks_2;
-	vector<Sprite> blocks_3;
+	vector<Block> blocks_1;
+	vector<Block> blocks_2;
+	vector<Block> blocks_3;
 	ShaderProgram texProgram;
 	float currentTime;
 	glm::mat4 projection;
