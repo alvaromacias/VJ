@@ -4,6 +4,7 @@
 
 #include "Sprite.h"
 #include "TileMap.h"
+#include "Block.h"
 
 
 // Ball is basically a Sprite that represents the ball.
@@ -19,16 +20,16 @@ public:
 
 	void setTileMap(TileMap *tileMap);
 	void setPosition(const glm::vec2 &pos);
+	void setBlocks(vector<Block> &newBlocks);
 
 private:
-	bool bJumping;
 	glm::ivec2 tileMapDispl;
 	glm::dvec2 posBall;
-	int jumpAngle, startY;
 	double angle;
 	Texture spritesheet;
 	Sprite *sprite;
 	TileMap *map;
+	vector<Block> blocks;
 
 };
 

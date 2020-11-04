@@ -35,15 +35,17 @@ void Scene::init()
 {
 	initShaders();
 	map = TileMap::createTileMap("levels/background.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
+
+	ball = new Ball();
+	ball->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+	ball->setPosition(glm::vec2((INIT_PLAYER_X_TILES + 1) * map->getTileSize(), (INIT_PLAYER_Y_TILES - 2) * map->getTileSize()));
+	ball->setTileMap(map);
+
 	createBlockMap("levels/level1_1.txt");
 	createBlockSprites();
 	player = new Player();
 	player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
-	player->setTileMap(map);
-	ball = new Ball();
-	ball->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	ball->setPosition(glm::vec2((INIT_PLAYER_X_TILES +1) * map->getTileSize(), (INIT_PLAYER_Y_TILES - 2) * map->getTileSize()));
 	player->setTileMap(map);
 
 	projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
@@ -96,7 +98,7 @@ void Scene::createBlockMap(const string &levelFile) {
 
 void Scene::createBlockSprites() {
 	glm::vec2 spritePos;
-	blocks = vector<Sprite>();
+	blocks = vector<Block>();
 	spritesheet.loadFromFile("images/sprites.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	for (int i = 0; i < 24; ++i) {
 		for (int j = 0; j < 24; ++j) {
@@ -111,36 +113,25 @@ void Scene::createBlockSprites() {
 				}
 				//crea sprites de diners, alarm, telefon/calculadora el q sigui i clau (blocs de 32x32)
 				if (blockMap[j * 24 + i] == 5 || blockMap[j * 24 + i] == 7 || blockMap[j * 24 + i] == 9 || blockMap[j * 24 + i] == 11 || blockMap[j * 24 + i] == 13) {
-					Sprite *sprite = Sprite::createSprite(glm::ivec2(32, 32), glm::vec2(0.125f, 1.f), &spritesheet, &texProgram);
-					sprite->setPosition(glm::vec2(16 * i + 32, 16 * j + 16));
-					sprite->setNumberAnimations(1);
-					sprite->setAnimationSpeed(0, 8);
-					sprite->addKeyframe(0, spritePos);
-					sprite->changeAnimation(0);
-					blocks.push_back(*sprite);
+					Block *block = Block::createBlock(glm::ivec2(32, 32), glm::vec2(0.125f, 1.f), &spritesheet, &texProgram, blockMap[j * 24 + i], glm::vec2(16 * i + 32, 16 * j + 16), 1, spritePos);
+					
+					blocks.push_back(*block);
 				}
 				//crea sprites de la pared (blocs grocs) (blocs de 16x16)
 				if (blockMap[j * 24 + i] == 15) {
-					Sprite *sprite = Sprite::createSprite(glm::ivec2(16, 16), glm::vec2(0.125f, 1.f), &spritesheet, &texProgram);
-					sprite->setPosition(glm::vec2(16 * i + 32, 16 * j + 16));
-					sprite->setNumberAnimations(1);
-					sprite->setAnimationSpeed(0, 8);
-					sprite->addKeyframe(0, spritePos);
-					sprite->changeAnimation(0);
-					blocks.push_back(*sprite);
+					Block *block = Block::createBlock(glm::ivec2(16, 16), glm::vec2(0.125f, 1.f), &spritesheet, &texProgram, blockMap[j * 24 + i], glm::vec2(16 * i + 32, 16 * j + 16), 1, spritePos);
+					blocks.push_back(*block);
 				}
 				//crea els ladrillos destruibles (blocs de 32x16)
 				else {
-					Sprite *sprite = Sprite::createSprite(glm::vec2(32, 16), glm::vec2(0.125f, 0.5f), &spritesheet, &texProgram);
-					sprite->setPosition(glm::vec2(16 * i + 32, 16 * j + 16));
-					sprite->setNumberAnimations(1);
-					sprite->addKeyframe(0, spritePos);
-					sprite->changeAnimation(0);
-					blocks.push_back(*sprite);
+					Block *block = Block::createBlock(glm::vec2(32, 16), glm::vec2(0.125f, 0.5f), &spritesheet, &texProgram, blockMap[j * 24 + i], glm::vec2(16 * i + 32, 16 * j + 16), 1, spritePos);
+
+					blocks.push_back(*block);
 				}
 			}
 		}
 	}
+	ball->setBlocks(blocks);
 }
 
 void Scene::update(int deltaTime)
