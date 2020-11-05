@@ -10,7 +10,7 @@
 #define JUMP_ANGLE_STEP 4
 #define JUMP_HEIGHT 96
 #define FALL_STEP 4
-#define SPEED 1
+#define SPEED 2
 #define PI 3.1415
 
 
@@ -34,28 +34,56 @@ void Ball::update(int deltaTime)
 	double new_angle = angle;
 
 	
-	for (int i = 0;i < blocks.size() && new_angle==angle;++i){
-		Block block = blocks[i];
+	for (int i = 0;i < (*blocks).size() && new_angle==angle;++i){
+		Block block = (*blocks)[i];
 		if (angle <= PI / 2) { //primer quadrant
-			if (block.collisionMoveUp(sprite->getPosition(), glm::vec2(18, 20))) new_angle = 2 * PI - angle;
-			else if (block.collisionMoveRight(sprite->getPosition(), glm::vec2(18, 20))) new_angle = PI - angle;
+			if (block.collisionMoveUp(sprite->getPosition(), glm::vec2(18, 20))) {
+				new_angle = 2 * PI - angle;
+				if(block.getTipe() != 15) (*blocks).erase((*blocks).begin()+i);
+			}
+			else if (block.collisionMoveRight(sprite->getPosition(), glm::vec2(18, 20))) {
+				new_angle = PI - angle;
+				if (block.getTipe() != 15) (*blocks).erase((*blocks).begin() + i);
+			}
 		}
 		else if (angle >= PI / 2 && angle <= PI) //segon quadrant
 		{
-			if (block.collisionMoveUp(sprite->getPosition(), glm::vec2(18, 20))) new_angle = 2*PI - angle;
-			else if (block.collisionMoveLeft(sprite->getPosition(), glm::vec2(18, 20))) new_angle = PI - angle;
+			if (block.collisionMoveUp(sprite->getPosition(), glm::vec2(18, 20))) {
+				new_angle = 2 * PI - angle;
+				if (block.getTipe() != 15) (*blocks).erase((*blocks).begin() + i);
+			}
+			else if (block.collisionMoveLeft(sprite->getPosition(), glm::vec2(18, 20))) {
+				new_angle = PI - angle;
+				if (block.getTipe() != 15) (*blocks).erase((*blocks).begin() + i);
+			}
 		}
 		else if (angle >= PI && angle <= 3 * PI / 2) //tercer quadrant
 		{
-			if (player->collisionMoveDown(sprite->getPosition(), glm::vec2(18, 20))) new_angle = PI - (angle - PI);
-			else if (block.collisionMoveDown(sprite->getPosition(), glm::vec2(18, 20))) new_angle = PI - (angle - PI);
-			else if (block.collisionMoveLeft(sprite->getPosition(), glm::vec2(18, 20))) new_angle = 2 * PI - (angle - PI);
+			if (player->collisionMoveDown(sprite->getPosition(), glm::vec2(18, 20))) {
+				new_angle = PI - (angle - PI);
+			}
+			else if (block.collisionMoveDown(sprite->getPosition(), glm::vec2(18, 20))) {
+				new_angle = PI - (angle - PI);
+				if (block.getTipe() != 15) (*blocks).erase((*blocks).begin() + i);
+			}
+			else if (block.collisionMoveLeft(sprite->getPosition(), glm::vec2(18, 20))) {
+				new_angle = 2 * PI - (angle - PI);
+				if (block.getTipe() != 15) (*blocks).erase((*blocks).begin() + i);
+			}
 		}
 		else if (angle >= 3 * PI / 2) //quart quadrant
 		{
-			if (player->collisionMoveDown(sprite->getPosition(), glm::vec2(18, 20))) new_angle = 2 * PI - angle;
-			if (block.collisionMoveDown(sprite->getPosition(), glm::vec2(18, 20))) new_angle = 2 * PI - angle;
-			else if (block.collisionMoveRight(sprite->getPosition(), glm::vec2(18, 20))) new_angle = 3 * PI / 2 - (angle - 3 * PI / 2);
+			if (player->collisionMoveDown(sprite->getPosition(), glm::vec2(18, 20))) {
+				new_angle = 2 * PI - angle;
+			}
+			if (block.collisionMoveDown(sprite->getPosition(), glm::vec2(18, 20))) {
+				new_angle = 2 * PI - angle;
+				if (block.getTipe() != 15) (*blocks).erase((*blocks).begin() + i);
+			}
+			else if (block.collisionMoveRight(sprite->getPosition(), glm::vec2(18, 20))) {
+				new_angle = 3 * PI / 2 - (angle - 3 * PI / 2);
+				if (block.getTipe() != 15) (*blocks).erase((*blocks).begin() + i);
+			}
 		}
 	}
 	if (new_angle != angle) {
@@ -82,7 +110,7 @@ void Ball::setPosition(const glm::vec2 &pos)
 	posBall = pos;
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posBall.x), float(tileMapDispl.y + posBall.y)));
 }
-void Ball::setBlocks(vector<Block> &newBlocks)
+void Ball::setBlocks(vector<Block> *newBlocks)
 {
 	blocks = newBlocks;
 }

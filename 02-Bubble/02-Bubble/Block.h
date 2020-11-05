@@ -22,6 +22,8 @@ public:
 	bool collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &sizeNotBlock);
 	bool collisionMoveUp(const glm::ivec2 &pos, const glm::ivec2 &sizeNotBlock);
 
+	int getTipe();
+
 private:
 	Sprite *sprite;
 	int tipe;

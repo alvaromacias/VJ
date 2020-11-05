@@ -80,3 +80,7 @@ bool Block::collisionMoveUp(const glm::ivec2 &pos, const glm::ivec2 &sizeNotBloc
 	}
 	return false;
 }
+
+int Block::getTipe() {
+	return tipe;
+}

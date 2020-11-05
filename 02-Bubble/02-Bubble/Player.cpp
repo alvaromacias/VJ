@@ -54,7 +54,7 @@ void Player::update(int deltaTime)
 	{
 		if(sprite->animation() != MOVE_LEFT)
 			sprite->changeAnimation(MOVE_LEFT);
-		if(posPlayer.x > 16) posPlayer.x -= 2;
+		if(posPlayer.x > 16) posPlayer.x -= 4;
 		/*if(map->collisionMoveLeft(posPlayer, glm::ivec2(32, 32)))
 		{
 			posPlayer.x += 2;
@@ -65,7 +65,7 @@ void Player::update(int deltaTime)
 	{
 		if(sprite->animation() != MOVE_RIGHT)
 			sprite->changeAnimation(MOVE_RIGHT);
-		if(posPlayer.x < 320) posPlayer.x += 2;
+		if(posPlayer.x < 320) posPlayer.x += 4;
 		/*if(map->collisionMoveRight(posPlayer, glm::ivec2(32, 32)))
 		{
 			posPlayer.x -= 2;
@@ -73,10 +73,10 @@ void Player::update(int deltaTime)
 		}*/
 	}
 	else if (Game::instance().getSpecialKey(GLUT_KEY_UP)) {
-		if (posPlayer.y > 32) posPlayer.y -= 2;
+		if (posPlayer.y > 32) posPlayer.y -= 4;
 	}
 	else if (Game::instance().getSpecialKey(GLUT_KEY_DOWN)) {
-		if (posPlayer.y < 336) posPlayer.y += 2;
+		if (posPlayer.y < 336) posPlayer.y += 4;
 	}
 	else
 	{

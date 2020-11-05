@@ -21,7 +21,7 @@ public:
 
 	void setTileMap(TileMap *tileMap);
 	void setPosition(const glm::vec2 &pos);
-	void setBlocks(vector<Block> &newBlocks);
+	void setBlocks(vector<Block> *newBlocks);
 	void setPlayer(Player *newPlayer);
 
 private:
@@ -31,7 +31,7 @@ private:
 	Texture spritesheet;
 	Sprite *sprite;
 	TileMap *map;
-	vector<Block> blocks;
+	vector<Block> *blocks;
 	Player *player;
 };
 

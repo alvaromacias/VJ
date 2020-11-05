@@ -43,7 +43,7 @@ void Scene::init()
 
 	createBlockMap("levels/level1_1.txt");
 	createBlockSprites(blocks_1);
-	ball->setBlocks(blocks_1);
+	ball->setBlocks(&blocks_1);
 	createBlockMap("levels/level1_2.txt");
 	createBlockSprites(blocks_2);
 	createBlockMap("levels/level1_3.txt");
@@ -180,13 +180,13 @@ void Scene::canviaPantalla(int n) {
 void Scene::setPantalla(int n) {
 	pantalla = n;
 	if (pantalla == 1) {
-		ball->setBlocks(blocks_1);
+		ball->setBlocks(&blocks_1);
 	}
 	else if (pantalla == 2) {
-		ball->setBlocks(blocks_2);
+		ball->setBlocks(&blocks_2);
 	}
 	else if (pantalla == 3) {
-		ball->setBlocks(blocks_3);
+		ball->setBlocks(&blocks_3);
 	}
 }
 
