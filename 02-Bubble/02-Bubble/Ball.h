@@ -33,6 +33,7 @@ private:
 	TileMap *map;
 	vector<Block> blocks;
 	Player *player;
+	bool stopped;
 };
 
 
