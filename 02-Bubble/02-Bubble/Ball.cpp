@@ -7,10 +7,7 @@
 #include "Game.h"
 
 
-#define JUMP_ANGLE_STEP 4
-#define JUMP_HEIGHT 96
-#define FALL_STEP 4
-#define SPEED 2
+#define SPEED 1
 #define PI 3.1415
 
 
@@ -22,16 +19,20 @@ void Ball::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 	tileMapDispl = tileMapPos;
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posBall.x), float(tileMapDispl.y + posBall.y -3)));
 	angle = PI/3;
-
+	stopped = true;
 }
 
 void Ball::update(int deltaTime)
 {
-	glm::dvec2 oldPosBall = posBall;
-	sprite->update(deltaTime);
-	posBall.x += cos(angle) * SPEED;
-	posBall.y -= sin(angle) * SPEED;
-	double new_angle = angle;
+	if (Game::instance().getKey(' ')) {
+		stopped = false;
+	}
+	if (!stopped) {
+		glm::dvec2 oldPosBall = posBall;
+		sprite->update(deltaTime);
+		posBall.x += cos(angle) * SPEED;
+		posBall.y -= sin(angle) * SPEED;
+		double new_angle = angle;
 
 	
 	for (int i = 0;i < (*blocks).size() && new_angle==angle;++i){
@@ -92,7 +93,8 @@ void Ball::update(int deltaTime)
 		posBall.y = oldPosBall.y - sin(angle) * SPEED;
 	}
 
-	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posBall.x), float(tileMapDispl.y + posBall.y)));
+		sprite->setPosition(glm::vec2(float(tileMapDispl.x + posBall.x), float(tileMapDispl.y + posBall.y)));
+	}
 }
 
 void Ball::render()

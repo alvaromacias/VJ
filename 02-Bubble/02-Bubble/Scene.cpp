@@ -38,7 +38,7 @@ void Scene::init()
 
 	ball = new Ball();
 	ball->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	ball->setPosition(glm::vec2((INIT_PLAYER_X_TILES + 1) * map->getTileSize(), (INIT_PLAYER_Y_TILES - 2) * map->getTileSize()));
+	ball->setPosition(glm::vec2((INIT_PLAYER_X_TILES + 1) * map->getTileSize(), (INIT_PLAYER_Y_TILES - 1.25) * map->getTileSize()));
 	ball->setTileMap(map);
 
 	createBlockMap("levels/level1_1.txt");
@@ -105,7 +105,6 @@ void Scene::createBlockMap(const string &levelFile) {
 
 void Scene::createBlockSprites(vector<Block> &blocks) {
 	glm::vec2 spritePos;
-	blocks = vector<Block>();
 	spritesheet.loadFromFile("images/sprites.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	for (int i = 0; i < 24; ++i) {
 		for (int j = 0; j < 24; ++j) {
