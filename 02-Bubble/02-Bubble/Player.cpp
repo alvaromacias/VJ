@@ -9,6 +9,7 @@
 #define JUMP_ANGLE_STEP 4
 #define JUMP_HEIGHT 96
 #define FALL_STEP 4
+#define PI 3.1415
 
 
 enum PlayerAnims
@@ -20,6 +21,7 @@ enum PlayerAnims
 void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 {
 	bJumping = false;
+	int vidas = 2;
 	spritesheet.loadFromFile("images/barra(2).png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(48, 48), glm::vec2(0.5, 0.5), &spritesheet, &shaderProgram);
 	size = glm::vec2(48, 48);
@@ -130,6 +132,18 @@ bool Player::collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &sizeNotB
 	return false;
 }
 
+double Player::newAngle(glm::vec2 ballPos) {
+	glm::vec2 pos = sprite->getPosition();
+	double newAngle;
+	if (ballPos.x == pos.x) newAngle = 0 - PI / 3;
+	else if (ballPos.x == pos.x + 48) newAngle = PI + PI / 3;
+	else {
+		double posRebote = ballPos.x - pos.x;
+		newAngle = PI - PI / (1 + 24/posRebote);
+	}
+	return newAngle;
+}
+
 void Player::render()
 {
 	sprite->render();
@@ -144,6 +158,19 @@ void Player::setPosition(const glm::vec2 &pos)
 {
 	posPlayer = pos;
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
+}
+
+int Player::getVidas() {
+	return vidas;
+}
+
+void Player::setVidas(int n) {
+	vidas = n;
+}
+
+int Player::updateVidas() {
+	--vidas;
+	return vidas;
 }
 
 

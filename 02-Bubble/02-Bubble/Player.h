@@ -21,6 +21,10 @@ public:
 	void setTileMap(TileMap *tileMap);
 	void setPosition(const glm::vec2 &pos);
 	bool collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &sizeNotBlock);
+	int getVidas();
+	void setVidas(int n);
+	int updateVidas();
+	double newAngle(glm::vec2 ballPos);
 	
 private:
 	bool bJumping;
@@ -30,6 +34,7 @@ private:
 	Sprite *sprite;
 	TileMap *map;
 	glm::vec2 size;
+	int vidas;
 
 };
 

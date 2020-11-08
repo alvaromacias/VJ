@@ -23,11 +23,14 @@ public:
 	bool collisionMoveUp(const glm::ivec2 &pos, const glm::ivec2 &sizeNotBlock);
 
 	int getTipe();
+	glm::vec2 getPosition();
+	void resistencia();
 
 private:
 	Sprite *sprite;
 	int tipe;
 	glm::vec2 size;
+	glm::vec2 position;
 
 };
 

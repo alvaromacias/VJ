@@ -16,16 +16,59 @@ Block::Block(const glm::vec2 &quadSize, const glm::vec2 &sizeInSpritesheet, Text
 	sprite = new Sprite(quadSize, sizeInSpritesheet, spritesheet, program);
 	this->tipe = tipe;
 	size = quadSize;
+	position = pos;
 	sprite->setPosition(pos);
 	sprite->setNumberAnimations(n_animations);
-	sprite->setAnimationSpeed(0, 8);
-	sprite->addKeyframe(0, spritePos);
-	sprite->changeAnimation(0);
+	if (tipe == 1) {
+		sprite->setAnimationSpeed(0, 8);
+		sprite->addKeyframe(0, spritePos);
+		sprite->changeAnimation(0);
+	}
+	else if (tipe == 17) {
+		sprite->setAnimationSpeed(0, 8);
+		sprite->addKeyframe(0, spritePos);
+		sprite->changeAnimation(0);
+	}
+	else if (tipe == 3) {
+		sprite->setAnimationSpeed(0, 8);
+		sprite->addKeyframe(0, spritePos);
+
+		sprite->setAnimationSpeed(1, 8);
+		sprite->addKeyframe(1, glm::vec2(spritePos.x - 0.125f, spritePos.y));
+
+		sprite->changeAnimation(0);
+	}
+	else if (tipe == 19) {
+		sprite->setAnimationSpeed(0, 8);
+		sprite->addKeyframe(0, spritePos);
+
+		sprite->setAnimationSpeed(1, 8);
+		sprite->addKeyframe(1, glm::vec2(spritePos.x - 0.125f, spritePos.y));
+		
+		sprite->changeAnimation(0);
+	}
+	else {
+		sprite->setAnimationSpeed(0, 8);
+		sprite->addKeyframe(0, spritePos);
+		sprite->changeAnimation(0);
+	}
+	
 }
 
 void Block::update(int deltaTime)
 {
 	sprite->update(deltaTime);
+}
+
+void Block::resistencia() {
+	if (tipe == 3) {
+		sprite->changeAnimation(1);
+		tipe = 1;
+	}
+	else if (tipe == 19) {
+		sprite->changeAnimation(1);
+		tipe = 17;
+	}
 }
 
 void Block::render() const
@@ -83,4 +126,8 @@ bool Block::collisionMoveUp(const glm::ivec2 &pos, const glm::ivec2 &sizeNotBloc
 
 int Block::getTipe() {
 	return tipe;
+}
+
+glm::vec2 Block::getPosition() {
+	return position;
 }

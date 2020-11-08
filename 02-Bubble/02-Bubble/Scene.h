@@ -25,6 +25,9 @@ public:
 	void update(int deltaTime);
 	void render();
 	void canviaPantalla(int n);
+	int getPantalla();
+	void setNivel(int n);
+	void avanzaPantalla(int n);
 
 private:
 	void initShaders();
@@ -32,6 +35,8 @@ private:
 	void createBlockSprites(vector<Block> &);
 	void renderBlocks(vector<Block> &);
 	void setPantalla(int n);
+	void createNivel2();
+	void createNivel3();
 	
 
 private:
@@ -43,11 +48,14 @@ private:
 	vector<Block> blocks_1;
 	vector<Block> blocks_2;
 	vector<Block> blocks_3;
+	bool first;
 	ShaderProgram texProgram;
 	float currentTime;
 	glm::mat4 projection;
 	Texture spritesheet;
 	int pantalla;
+	int nivel;
+	int vidas;
 
 };
 

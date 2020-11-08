@@ -23,6 +23,11 @@ public:
 	void setPosition(const glm::vec2 &pos);
 	void setBlocks(vector<Block> *newBlocks);
 	void setPlayer(Player *newPlayer);
+	void agafaClau();
+	glm::dvec2 getPos();
+	bool ganastebro();
+	void setStopped(bool b);
+	void setAngle(double a);
 
 private:
 	glm::ivec2 tileMapDispl;
@@ -34,6 +39,7 @@ private:
 	vector<Block> *blocks;
 	Player *player;
 	bool stopped;
+	ShaderProgram texProgram;
 };
 
 

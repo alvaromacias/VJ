@@ -33,6 +33,12 @@ void Game::keyPressed(int key)
 		scene.canviaPantalla(2);
 	if (key == '3')
 		scene.canviaPantalla(3);
+	if (key == 'q')
+		scene.setNivel(1);
+	if (key == 'w')
+		scene.setNivel(2);
+	if (key == 'e')
+		scene.setNivel(3);
 	keys[key] = true;
 }
 
