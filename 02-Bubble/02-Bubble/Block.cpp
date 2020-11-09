@@ -25,27 +25,34 @@ Block::Block(const glm::vec2 &quadSize, const glm::vec2 &sizeInSpritesheet, Text
 		sprite->changeAnimation(0);
 	}
 	else if (tipe == 17) {
+		sprite->setAnimationSpeed(1, 8);
+		sprite->addKeyframe(1, spritePos);
+
 		sprite->setAnimationSpeed(0, 8);
-		sprite->addKeyframe(0, spritePos);
-		sprite->changeAnimation(0);
+		sprite->addKeyframe(0, glm::vec2(spritePos.x, 0.f));
+
+		sprite->changeAnimation(1);
 	}
 	else if (tipe == 3) {
-		sprite->setAnimationSpeed(0, 8);
-		sprite->addKeyframe(0, spritePos);
-
 		sprite->setAnimationSpeed(1, 8);
-		sprite->addKeyframe(1, glm::vec2(spritePos.x - 0.125f, spritePos.y));
+		sprite->addKeyframe(1, spritePos);
 
-		sprite->changeAnimation(0);
+		sprite->setAnimationSpeed(0, 8);
+		sprite->addKeyframe(0, glm::vec2(spritePos.x - 0.125f, spritePos.y));
+
+		sprite->changeAnimation(1);
 	}
 	else if (tipe == 19) {
-		sprite->setAnimationSpeed(0, 8);
-		sprite->addKeyframe(0, spritePos);
+		sprite->setAnimationSpeed(2, 8);
+		sprite->addKeyframe(2, spritePos);
 
 		sprite->setAnimationSpeed(1, 8);
-		sprite->addKeyframe(1, glm::vec2(spritePos.x - 0.125f, spritePos.y));
+		sprite->addKeyframe(1, glm::vec2(spritePos.x, 0.f));
+
+		sprite->setAnimationSpeed(0, 8);
+		sprite->addKeyframe(0, glm::vec2(spritePos.x - 0.125f, 0.f));
 		
-		sprite->changeAnimation(0);
+		sprite->changeAnimation(2);
 	}
 	else {
 		sprite->setAnimationSpeed(0, 8);
@@ -60,15 +67,25 @@ void Block::update(int deltaTime)
 	sprite->update(deltaTime);
 }
 
-void Block::resistencia() {
-	if (tipe == 3) {
-		sprite->changeAnimation(1);
-		tipe = 1;
+bool Block::resistencia() {
+	int animation = sprite->animation();
+	/*if (tipe == 3 && animation > 0) {
+		sprite->changeAnimation(animation - 1);
+		return true;
 	}
-	else if (tipe == 19) {
-		sprite->changeAnimation(1);
-		tipe = 17;
+	else if (tipe == 17 && animation > 0) {
+		sprite->changeAnimation(animation - 1);
+		return true;
 	}
+	else if (tipe == 19 && animation > 0) {
+		sprite->changeAnimation(animation - 1);
+		return true;
+	}*/
+	if (sprite->animation() > 0) {
+		sprite->changeAnimation(animation - 1);
+		return true;
+	}
+	return false;
 }
 
 void Block::render() const

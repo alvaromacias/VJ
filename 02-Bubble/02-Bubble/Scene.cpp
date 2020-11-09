@@ -136,7 +136,7 @@ void Scene::createBlockSprites(vector<Block> &blocks) {
 				}
 				//crea els ladrillos destruibles (blocs de 32x16)
 				else {
-					Block *block = Block::createBlock(glm::vec2(32, 16), glm::vec2(0.125f, 0.5f), &spritesheet, &texProgram, blockMap[j * 24 + i], glm::vec2(16 * i + 32, 16 * j + 16), 2, spritePos);
+					Block *block = Block::createBlock(glm::vec2(32, 16), glm::vec2(0.125f, 0.5f), &spritesheet, &texProgram, blockMap[j * 24 + i], glm::vec2(16 * i + 32, 16 * j + 16), 3, spritePos);
 
 					blocks.push_back(*block);
 				}

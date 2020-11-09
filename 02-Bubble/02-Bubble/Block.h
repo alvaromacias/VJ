@@ -24,7 +24,7 @@ public:
 
 	int getTipe();
 	glm::vec2 getPosition();
-	void resistencia();
+	bool resistencia();
 
 private:
 	Sprite *sprite;
