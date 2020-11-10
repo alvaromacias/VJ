@@ -61,6 +61,9 @@ void Scene::init()
 	ball->setPlayer(player);
 	vidas = 2;
 
+	vigilante = new Vigilante();
+	vigilante->init(texProgram);
+
 	projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
 	currentTime = 0.0f;
 }
@@ -166,7 +169,8 @@ void Scene::update(int deltaTime)
 		else setNivel(nivel + 1);
 	}
 	player->update(deltaTime);
-	ball->update(deltaTime);
+	ball->update(deltaTime, &alarma);
+	if (alarma) vigilante->update(deltaTime, player->getPos());
 }
 
 void Scene::setNivel(int n) {
@@ -230,6 +234,7 @@ void Scene::render()
 	else if (pantalla == 3) renderBlocks(blocks_3);
 	player->render();
 	ball->render();
+	if(alarma) vigilante->render();
 }
 
 void Scene::renderBlocks(vector<Block> &blocks) {
