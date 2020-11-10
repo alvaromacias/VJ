@@ -24,8 +24,7 @@ public:
 	int getVidas();
 	void setVidas(int n);
 	int updateVidas();
-	double newAngle(glm::vec2 ballPos);
-	glm::vec2 getPos();
+	double PositionOfPlayerWhereColision(glm::vec2 ballPos, glm::vec2 ballSize);
 	
 private:
 	bool bJumping;

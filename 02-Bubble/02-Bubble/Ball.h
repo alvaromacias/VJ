@@ -40,6 +40,8 @@ private:
 	Player *player;
 	bool stopped;
 	ShaderProgram texProgram;
+	glm::vec2 size;
+	float speed;
 };
 
 
