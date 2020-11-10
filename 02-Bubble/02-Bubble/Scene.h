@@ -8,6 +8,7 @@
 #include "Player.h"
 #include "Ball.h"
 #include "Block.h"
+#include "Vigilante.h"
 
 
 // Scene contains all the entities of our game.
@@ -45,6 +46,7 @@ private:
 	int *blockMap;
 	Player *player;
 	Ball *ball;
+	Vigilante *vigilante;
 	vector<Block> blocks_1;
 	vector<Block> blocks_2;
 	vector<Block> blocks_3;
@@ -56,7 +58,7 @@ private:
 	int pantalla;
 	int nivel;
 	int vidas;
-
+	bool alarma;
 };
 
 

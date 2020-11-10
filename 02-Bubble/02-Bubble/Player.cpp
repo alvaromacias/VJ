@@ -173,6 +173,10 @@ int Player::updateVidas() {
 	return vidas;
 }
 
+glm::vec2 Player::getPos() {
+	return posPlayer;
+}
+
 
 
 

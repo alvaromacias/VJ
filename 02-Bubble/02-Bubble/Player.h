@@ -25,6 +25,7 @@ public:
 	void setVidas(int n);
 	int updateVidas();
 	double newAngle(glm::vec2 ballPos);
+	glm::vec2 getPos();
 	
 private:
 	bool bJumping;
