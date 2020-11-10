@@ -60,6 +60,7 @@ void Scene::init()
 	player->setTileMap(map);
 	ball->setPlayer(player);
 	vidas = 2;
+	god = false;
 
 	vigilante = new Vigilante();
 	vigilante->init(texProgram);
@@ -157,7 +158,7 @@ void Scene::update(int deltaTime)
 		if (vidas == 0)
 			init();
 		else {
-			--vidas;
+			if (!god) --vidas;
 			player->setPosition(glm::vec2(176.f, 336.f));
 			ball->setStopped(true);
 			ball->setPosition(glm::vec2(192.f, 320.f));
@@ -250,6 +251,10 @@ int Scene::getPantalla() {
 //metode public
 void Scene::canviaPantalla(int n) {
 	setPantalla(n);
+}
+
+void Scene::god_mode() {
+	god = true;
 }
 
 

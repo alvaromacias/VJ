@@ -39,6 +39,8 @@ void Game::keyPressed(int key)
 		scene.setNivel(2);
 	if (key == 'e')
 		scene.setNivel(3);
+	if (key == 'g')
+		scene.god_mode();
 	keys[key] = true;
 }
 

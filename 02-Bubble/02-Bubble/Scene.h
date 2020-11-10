@@ -29,6 +29,7 @@ public:
 	int getPantalla();
 	void setNivel(int n);
 	void avanzaPantalla(int n);
+	void god_mode();
 
 private:
 	void initShaders();
@@ -59,6 +60,7 @@ private:
 	int nivel;
 	int vidas;
 	bool alarma;
+	bool god;
 };
 
 

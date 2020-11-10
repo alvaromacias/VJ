@@ -1,10 +1,10 @@
 ﻿  Scene.cpp
-c:\users\alvaro\source\repos\vj\02-bubble\02-bubble\scene.cpp(241): warning C4018: '<': signed/unsigned mismatch
-  Player.cpp
+c:\users\alvaro\source\repos\vj\02-bubble\02-bubble\scene.cpp(242): warning C4018: '<': signed/unsigned mismatch
+  Game.cpp
   Generating Code...
   Skipping... (no relevant changes detected)
   main.cpp
-  Game.cpp
+  Player.cpp
   Ball.cpp
 SOIL.lib(image_DXT.obj) : warning LNK4099: PDB 'vc100.pdb' was not found with 'SOIL.lib(image_DXT.obj)' or at 'C:\Users\alvaro\Source\Repos\VJ\02-Bubble\Debug\vc100.pdb'; linking object as if no debug info
 SOIL.lib(image_helper.obj) : warning LNK4099: PDB 'vc100.pdb' was not found with 'SOIL.lib(image_helper.obj)' or at 'C:\Users\alvaro\Source\Repos\VJ\02-Bubble\Debug\vc100.pdb'; linking object as if no debug info
