@@ -7,7 +7,6 @@
 #include "Game.h"
 
 
-#define SPEED 2
 #define PI 3.1415
 
 
@@ -16,11 +15,13 @@ void Ball::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 {
 	spritesheet.loadFromFile("images/pilota.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(18, 20), glm::vec2(1, 1), &spritesheet, &shaderProgram);
+	size = glm::vec2(18, 20);
 	texProgram = shaderProgram;
 	tileMapDispl = tileMapPos;
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posBall.x), float(tileMapDispl.y + posBall.y -3)));
 	angle = PI/3;
 	stopped = true;
+	speed = 2;
 }
 
 void Ball::update(int deltaTime)
@@ -31,8 +32,8 @@ void Ball::update(int deltaTime)
 	if (!stopped) {
 		glm::dvec2 oldPosBall = posBall;
 		sprite->update(deltaTime);
-		posBall.x += cos(angle) * SPEED;
-		posBall.y -= sin(angle) * SPEED;
+		posBall.x += cos(angle) * speed;
+		posBall.y -= sin(angle) * speed;
 		double new_angle = angle;
 
 	
@@ -66,7 +67,9 @@ void Ball::update(int deltaTime)
 		else if (angle >= PI && angle <= 3 * PI / 2) //tercer quadrant
 		{
 			if (player->collisionMoveDown(sprite->getPosition(), glm::vec2(18, 20))) {
-				new_angle = PI - (angle - PI);
+				new_angle = 90 * PI / 180 - player->PositionOfPlayerWhereColision(sprite->getPosition(), size) * 45 * PI / 180;
+				if (new_angle > (90 + 30)*PI / 180 || new_angle < (90 - 30)*PI / 180) speed = 5;
+				else speed = 3;
 			}
 			else if (block.collisionMoveDown(sprite->getPosition(), glm::vec2(18, 20))) {
 				new_angle = PI - (angle - PI);
@@ -82,7 +85,9 @@ void Ball::update(int deltaTime)
 		else if (angle >= 3 * PI / 2) //quart quadrant
 		{
 			if (player->collisionMoveDown(sprite->getPosition(), glm::vec2(18, 20))) {
-				new_angle = 2 * PI - angle;
+				new_angle = 90*PI/180 - player->PositionOfPlayerWhereColision(sprite->getPosition(), size) * 45*PI/180;
+				if (new_angle > (90 + 30)*PI / 180 || new_angle < (90 - 30)*PI / 180) speed = 5;
+				else speed = 3;
 			}
 			if (block.collisionMoveDown(sprite->getPosition(), glm::vec2(18, 20))) {
 				new_angle = 2 * PI - angle;
@@ -98,8 +103,8 @@ void Ball::update(int deltaTime)
 	}
 	if (new_angle != angle) {
 		angle = new_angle;
-		posBall.x = oldPosBall.x + cos(angle) * SPEED;
-		posBall.y = oldPosBall.y - sin(angle) * SPEED;
+		posBall.x = oldPosBall.x + cos(angle) * speed;
+		posBall.y = oldPosBall.y - sin(angle) * speed;
 	}
 
 		sprite->setPosition(glm::vec2(float(tileMapDispl.x + posBall.x), float(tileMapDispl.y + posBall.y)));

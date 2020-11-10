@@ -132,16 +132,11 @@ bool Player::collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &sizeNotB
 	return false;
 }
 
-double Player::newAngle(glm::vec2 ballPos) {
+double Player::PositionOfPlayerWhereColision(glm::vec2 ballPos, glm::vec2 ballSize) {
 	glm::vec2 pos = sprite->getPosition();
-	double newAngle;
-	if (ballPos.x == pos.x) newAngle = 0 - PI / 3;
-	else if (ballPos.x == pos.x + 48) newAngle = PI + PI / 3;
-	else {
-		double posRebote = ballPos.x - pos.x;
-		newAngle = PI - PI / (1 + 24/posRebote);
-	}
-	return newAngle;
+	float x;
+	x = ((ballPos.x + int(ballSize.x / 2) - pos.x)/size.x*2 - 1);
+	return x;
 }
 
 void Player::render()
