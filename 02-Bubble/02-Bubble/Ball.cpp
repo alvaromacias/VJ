@@ -21,12 +21,13 @@ void Ball::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posBall.x), float(tileMapDispl.y + posBall.y -3)));
 	angle = PI/3;
 	stopped = true;
-	speed = 2;
+	speed = 3;
 }
 
 void Ball::update(int deltaTime, bool *alarma)
 {
-	if (Game::instance().getKey(' ')) {
+	if (Game::instance().getKey(' ') || Game::instance().getSpecialKey(GLUT_KEY_LEFT) || Game::instance().getSpecialKey(GLUT_KEY_RIGHT) ||
+		Game::instance().getSpecialKey(GLUT_KEY_UP) || Game::instance().getSpecialKey(GLUT_KEY_DOWN)) {
 		stopped = false;
 	}
 	if (!stopped) {

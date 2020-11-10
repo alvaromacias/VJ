@@ -124,7 +124,7 @@ bool Player::collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &sizeNotB
 {
 	glm::vec2 posBlock = sprite->getPosition();
 	if (!(Game::instance().getSpecialKey(GLUT_KEY_DOWN)) && 
-		pos.y + sizeNotBlock.y - 1 >= posBlock.y && pos.y + sizeNotBlock.y - 1 <= posBlock.y + size.y - 1 &&
+		pos.y + sizeNotBlock.y - 1 >= posBlock.y && pos.y + sizeNotBlock.y - 1 <= posBlock.y + 16 - 1 &&
 		!(pos.x >= posBlock.x + size.x - 1 || pos.x + sizeNotBlock.x - 1 <= posBlock.x))
 	{
 		return true;
