@@ -40,6 +40,7 @@ private:
 	void setPantalla(int n);
 	void createNivel2();
 	void createNivel3();
+	void die();
 	
 
 private:

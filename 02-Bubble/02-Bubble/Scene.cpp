@@ -158,29 +158,38 @@ void Scene::createBlockSprites(vector<Block> &blocks) {
 	}
 }
 
+void Scene::die() {
+	if (vidas == 0)
+		init();
+	else {
+		if (!god) --vidas;
+		player->setPosition(glm::vec2(176.f, 336.f));
+		ball->setStopped(true);
+		ball->setPosition(glm::vec2(192.f, 320.f));
+		ball->setAngle(3.1415 / 3);
+		if (alarma) {
+			vigilante->init(texProgram);
+			alarma = false;
+		}
+		pantalla = 1;
+	}
+}
+
 void Scene::update(int deltaTime)
 {
 	currentTime += deltaTime;
 	if (ball->getPos().y < 3) avanzaPantalla(pantalla + 1);
 	if (ball->getPos().y > 370 && pantalla > 1) avanzaPantalla(pantalla - 1);
-	else if (ball->getPos().y > 370) {
-		if (vidas == 0)
-			init();
-		else {
-			if (!god) --vidas;
-			player->setPosition(glm::vec2(176.f, 336.f));
-			ball->setStopped(true);
-			ball->setPosition(glm::vec2(192.f, 320.f));
-			ball->setAngle(3.1415 / 3);
-		}
-	}
+	else if (ball->getPos().y > 370) die();
 	if (pantalla == 3 && ball->ganastebro()) {
 		if (nivel == 3) setNivel(1);
 		else setNivel(nivel + 1);
 	}
 	player->update(deltaTime);
 	ball->update(deltaTime, &alarma, &money, &points);
-	if (alarma) vigilante->update(deltaTime, player->getPos());
+	if (alarma) {
+		if (vigilante->update(deltaTime, player->getPos())) die();
+	}
 }
 
 void Scene::setNivel(int n) {

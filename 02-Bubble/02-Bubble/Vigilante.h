@@ -13,7 +13,8 @@ class Vigilante
 public:
 	void init(ShaderProgram &shaderProgram);
 	void render();
-	void update(int deltaTime, glm::vec2 posPlayer);
+	bool update(int deltaTime, glm::vec2 posPlayer);
+	bool pillado(glm::vec2 posPlayer);
 
 	void move();
 

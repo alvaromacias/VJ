@@ -39,7 +39,16 @@ void Vigilante::move() {
 	sprite->setPosition(pos);
 }
 
-void Vigilante::update(int deltaTime, glm::vec2 posPlayer) {
+bool Vigilante::pillado(glm::vec2 posPlayer) {
+	glm::vec2 posVigilante = sprite->getPosition();
+	if (posVigilante.x >= posPlayer.x && posVigilante.x <= posPlayer.x + 48 && posVigilante.y >= posPlayer.y && posVigilante.y <= posPlayer.y + 48) return true;
+	if (posVigilante.x - 32 >= posPlayer.x && posVigilante.x - 32 <= posPlayer.x + 48 && posVigilante.y >= posPlayer.y && posVigilante.y <= posPlayer.y + 48) return true;
+	if (posVigilante.x >= posPlayer.x && posVigilante.x <= posPlayer.x + 48 && posVigilante.y - 16>= posPlayer.y && posVigilante.y - 16<= posPlayer.y + 48) return true;
+	if (posVigilante.x - 32 >= posPlayer.x && posVigilante.x - 32 <= posPlayer.x + 48 && posVigilante.y - 16 >= posPlayer.y && posVigilante.y - 16 <= posPlayer.y + 48) return true;
+	return false;
+}
+
+bool Vigilante::update(int deltaTime, glm::vec2 posPlayer) {
 	if (wait) {
 		timeSinceStart = glutGet(GLUT_ELAPSED_TIME);
 		wait = false;
@@ -53,6 +62,7 @@ void Vigilante::update(int deltaTime, glm::vec2 posPlayer) {
 		move();
 	}
 	sprite->update(deltaTime);
+	return pillado(posPlayer);
 }
 
 void Vigilante::render() {
