@@ -204,6 +204,7 @@ void Scene::setNivel(int n) {
 	else if (n == 2) createNivel2();
 	else if (n == 3) createNivel3();
 	alarma = false;
+	vigilante->init(texProgram);
 }
 
 void Scene::createNivel2() {
