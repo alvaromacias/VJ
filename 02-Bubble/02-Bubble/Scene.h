@@ -67,6 +67,7 @@ private:
 	bool alarma;
 	bool god;
 	Text text;
+	bool restart;
 };
 
 

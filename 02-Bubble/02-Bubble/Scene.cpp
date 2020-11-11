@@ -65,6 +65,7 @@ void Scene::init()
 	god = false;
 	money = 0;
 	points = 0;
+	restart = false;
 
 	vigilante = new Vigilante();
 	vigilante->init(texProgram);
@@ -160,7 +161,7 @@ void Scene::createBlockSprites(vector<Block> &blocks) {
 
 void Scene::die() {
 	if (vidas == 0)
-		init();
+		restart = true;
 	else {
 		if (!god) --vidas;
 		player->setPosition(glm::vec2(176.f, 336.f));
@@ -183,18 +184,20 @@ bool Scene::pantallaVigilante() {
 
 void Scene::update(int deltaTime)
 {
-	currentTime += deltaTime;
-	if (ball->getPos().y < 3) avanzaPantalla(pantalla + 1);
-	if (ball->getPos().y > 370 && pantalla > 1) avanzaPantalla(pantalla - 1);
-	else if (ball->getPos().y > 370) die();
-	if (pantalla == 3 && ball->ganastebro()) {
-		if (nivel == 3) setNivel(1);
-		else setNivel(nivel + 1);
-	}
-	player->update(deltaTime);
-	ball->update(deltaTime, &alarma, &money, &points);
-	if (alarma && pantallaVigilante()) {
-		if (vigilante->update(deltaTime, player->getPos())) die();
+	if (!restart) {
+		currentTime += deltaTime;
+		if (ball->getPos().y < 3) avanzaPantalla(pantalla + 1);
+		if (ball->getPos().y > 370 && pantalla > 1) avanzaPantalla(pantalla - 1);
+		else if (ball->getPos().y > 370) die();
+		if (pantalla == 3 && ball->ganastebro()) {
+			if (nivel == 3) setNivel(1);
+			else setNivel(nivel + 1);
+		}
+		player->update(deltaTime);
+		ball->update(deltaTime, &alarma, &money, &points);
+		if (alarma && pantallaVigilante()) {
+			if (vigilante->update(deltaTime, player->getPos())) die();
+		}
 	}
 }
 
@@ -279,6 +282,12 @@ void Scene::render()
 
 	text.render("ROOM:", glm::vec2(27 * map->getTileSize(), 22 * map->getTileSize() + 8), 32, glm::vec4(1, 1, 1, 1));
 	text.render(to_string(pantalla), glm::vec2(27 * map->getTileSize(), 24 * map->getTileSize() + 8), 32, glm::vec4(1, 1, 1, 1));
+
+	if (restart) {
+		text.render("GAME OVER!", glm::vec2(10 * map->getTileSize(), 10 * map->getTileSize()), 64, glm::vec4(1, 0, 0, 1));
+		text.render("PRESS 'R' TO RESTART", glm::vec2(10 * map->getTileSize(), 14 * map->getTileSize()), 32, glm::vec4(1, 0, 0, 1));
+		if (Game::instance().getKey('r')) init();
+	}
 }
 
 void Scene::renderBlocks(vector<Block> &blocks) {
