@@ -73,8 +73,8 @@ void Scene::init()
 	currentTime = 0.0f;
 
 	if (!text.init("fonts/OpenSans-Regular.ttf"))
-		//if(!text.init("fonts/OpenSans-Bold.ttf"))
-		//if(!text.init("fonts/DroidSerif.ttf"))
+	//if(!text.init("fonts/OpenSans-Bold.ttf"))
+	//if(!text.init("fonts/DroidSerif.ttf"))
 		cout << "Could not load font!!!" << endl;
 }
 
@@ -171,8 +171,14 @@ void Scene::die() {
 			vigilante->init(texProgram);
 			alarma = false;
 		}
-		pantalla = 1;
+		setPantalla(1);
 	}
+}
+
+bool Scene::pantallaVigilante() {
+	if (pantalla == 3 && nivel == 2) return true;
+	if (pantalla == 2 && nivel == 3) return true;
+	return false;
 }
 
 void Scene::update(int deltaTime)
@@ -187,7 +193,7 @@ void Scene::update(int deltaTime)
 	}
 	player->update(deltaTime);
 	ball->update(deltaTime, &alarma, &money, &points);
-	if (alarma) {
+	if (alarma && pantallaVigilante()) {
 		if (vigilante->update(deltaTime, player->getPos())) die();
 	}
 }
@@ -197,6 +203,7 @@ void Scene::setNivel(int n) {
 	if (n == 1) init();
 	else if (n == 2) createNivel2();
 	else if (n == 3) createNivel3();
+	alarma = false;
 }
 
 void Scene::createNivel2() {
@@ -255,7 +262,7 @@ void Scene::render()
 	else if (pantalla == 3) renderBlocks(blocks_3);
 	player->render();
 	ball->render();
-	if(alarma) vigilante->render();
+	if(alarma && pantallaVigilante()) vigilante->render();
 	
 	text.render("MONEY:", glm::vec2(27 * map->getTileSize(), 2 * map->getTileSize() + 8), 32, glm::vec4(1, 1, 1, 1));
 	text.render(to_string(money), glm::vec2(27 * map->getTileSize(), 4 * map->getTileSize() + 8), 32, glm::vec4(1, 1, 1, 1));

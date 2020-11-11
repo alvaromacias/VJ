@@ -41,6 +41,7 @@ private:
 	void createNivel2();
 	void createNivel3();
 	void die();
+	bool pantallaVigilante();
 	
 
 private:
