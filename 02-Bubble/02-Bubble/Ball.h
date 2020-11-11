@@ -16,7 +16,7 @@ class Ball
 
 public:
 	void init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram);
-	void update(int deltaTime, bool *alarma);
+	void update(int deltaTime, bool *alarma, int *money, int *points);
 	void render();
 
 	void setTileMap(TileMap *tileMap);

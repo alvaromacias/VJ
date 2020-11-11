@@ -24,7 +24,7 @@ void Ball::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 	speed = 3;
 }
 
-void Ball::update(int deltaTime, bool *alarma)
+void Ball::update(int deltaTime, bool *alarma, int *money, int *points)
 {
 	if (Game::instance().getKey(' ') || Game::instance().getSpecialKey(GLUT_KEY_LEFT) || Game::instance().getSpecialKey(GLUT_KEY_RIGHT) ||
 		Game::instance().getSpecialKey(GLUT_KEY_UP) || Game::instance().getSpecialKey(GLUT_KEY_DOWN)) {
@@ -44,13 +44,31 @@ void Ball::update(int deltaTime, bool *alarma)
 			if (block.collisionMoveUp(sprite->getPosition(), glm::vec2(18, 20))) {
 				new_angle = 2 * PI - angle;
 				if (block.getTipe() == 7) *alarma = true;
-				else if(block.getTipe() != 15 && !(*blocks)[i].resistencia()) (*blocks).erase((*blocks).begin()+i);
+				else if (block.getTipe() != 15 && !(*blocks)[i].resistencia()) {
+					if (block.getTipe() == 1 || block.getTipe() == 3 || block.getTipe() == 17 || block.getTipe() == 19) *points += 100;
+					else if (block.getTipe() == 7) *money += 100;
+					else if (block.getTipe() == 9) *money += 200;
+					else if (block.getTipe() == 11) {
+						*money += *points;
+						*points = 0;
+					}
+					(*blocks).erase((*blocks).begin() + i);
+				}
 				if (block.getTipe() == 13) agafaClau();
 			}
 			else if (block.collisionMoveRight(sprite->getPosition(), glm::vec2(18, 20))) {
 				new_angle = PI - angle;
 				if (block.getTipe() == 7) *alarma = true;
-				else if (block.getTipe() != 15 && !(*blocks)[i].resistencia()) (*blocks).erase((*blocks).begin() + i);
+				else if (block.getTipe() != 15 && !(*blocks)[i].resistencia()) {
+					if (block.getTipe() == 1 || block.getTipe() == 3 || block.getTipe() == 17 || block.getTipe() == 19) *points += 100;
+					else if (block.getTipe() == 7) *money += 100;
+					else if (block.getTipe() == 9) *money += 200;
+					else if (block.getTipe() == 11) {
+						*money += *points;
+						*points = 0;
+					}
+					(*blocks).erase((*blocks).begin() + i);
+				}
 				if (block.getTipe() == 13) agafaClau();
 			}
 		}
@@ -59,13 +77,31 @@ void Ball::update(int deltaTime, bool *alarma)
 			if (block.collisionMoveUp(sprite->getPosition(), glm::vec2(18, 20))) {
 				new_angle = 2 * PI - angle;
 				if (block.getTipe() == 7) *alarma = true;
-				else if (block.getTipe() != 15 && !(*blocks)[i].resistencia()) (*blocks).erase((*blocks).begin() + i);
+				else if (block.getTipe() != 15 && !(*blocks)[i].resistencia()) {
+					if (block.getTipe() == 1 || block.getTipe() == 3 || block.getTipe() == 17 || block.getTipe() == 19) *points += 100;
+					else if (block.getTipe() == 7) *money += 100;
+					else if (block.getTipe() == 9) *money += 200;
+					else if (block.getTipe() == 11) {
+						*money += *points;
+						*points = 0;
+					}
+					(*blocks).erase((*blocks).begin() + i);
+				}
 				if (block.getTipe() == 13) agafaClau();
 			}
 			else if (block.collisionMoveLeft(sprite->getPosition(), glm::vec2(18, 20))) {
 				new_angle = PI - angle;
 				if (block.getTipe() == 7) *alarma = true;
-				else if (block.getTipe() != 15 && !(*blocks)[i].resistencia()) (*blocks).erase((*blocks).begin() + i);
+				else if (block.getTipe() != 15 && !(*blocks)[i].resistencia()) {
+					if (block.getTipe() == 1 || block.getTipe() == 3 || block.getTipe() == 17 || block.getTipe() == 19) *points += 100;
+					else if (block.getTipe() == 7) *money += 100;
+					else if (block.getTipe() == 9) *money += 200;
+					else if (block.getTipe() == 11) {
+						*money += *points;
+						*points = 0;
+					}
+					(*blocks).erase((*blocks).begin() + i);
+				}
 				if (block.getTipe() == 13) agafaClau();
 			}
 		}
@@ -79,13 +115,31 @@ void Ball::update(int deltaTime, bool *alarma)
 			else if (block.collisionMoveDown(sprite->getPosition(), glm::vec2(18, 20))) {
 				new_angle = PI - (angle - PI);
 				if (block.getTipe() == 7) *alarma = true;
-				else if (block.getTipe() != 15 && !(*blocks)[i].resistencia()) (*blocks).erase((*blocks).begin() + i);
+				else if (block.getTipe() != 15 && !(*blocks)[i].resistencia()) {
+					if (block.getTipe() == 1 || block.getTipe() == 3 || block.getTipe() == 17 || block.getTipe() == 19) *points += 100;
+					else if (block.getTipe() == 7) *money += 100;
+					else if (block.getTipe() == 9) *money += 200;
+					else if (block.getTipe() == 11) {
+						*money += *points;
+						*points = 0;
+					}
+					(*blocks).erase((*blocks).begin() + i);
+				}
 				if (block.getTipe() == 13) agafaClau();
 			}
 			else if (block.collisionMoveLeft(sprite->getPosition(), glm::vec2(18, 20))) {
 				new_angle = 2 * PI - (angle - PI);
 				if (block.getTipe() == 7) *alarma = true;
-				else if (block.getTipe() != 15 && !(*blocks)[i].resistencia()) (*blocks).erase((*blocks).begin() + i);
+				else if (block.getTipe() != 15 && !(*blocks)[i].resistencia()) {
+					if (block.getTipe() == 1 || block.getTipe() == 3 || block.getTipe() == 17 || block.getTipe() == 19) *points += 100;
+					else if (block.getTipe() == 7) *money += 100;
+					else if (block.getTipe() == 9) *money += 200;
+					else if (block.getTipe() == 11) {
+						*money += *points;
+						*points = 0;
+					}
+					(*blocks).erase((*blocks).begin() + i);
+				}
 				if (block.getTipe() == 13) agafaClau();
 			}
 		}
@@ -99,13 +153,31 @@ void Ball::update(int deltaTime, bool *alarma)
 			if (block.collisionMoveDown(sprite->getPosition(), glm::vec2(18, 20))) {
 				new_angle = 2 * PI - angle;
 				if (block.getTipe() == 7) *alarma = true;
-				else if (block.getTipe() != 15 && !(*blocks)[i].resistencia()) (*blocks).erase((*blocks).begin() + i);
+				else if (block.getTipe() != 15 && !(*blocks)[i].resistencia()) {
+					if (block.getTipe() == 1 || block.getTipe() == 3 || block.getTipe() == 17 || block.getTipe() == 19) *points += 100;
+					else if (block.getTipe() == 7) *money += 100;
+					else if (block.getTipe() == 9) *money += 200;
+					else if (block.getTipe() == 11) {
+						*money += *points;
+						*points = 0;
+					}
+					(*blocks).erase((*blocks).begin() + i);
+				}
 				if (block.getTipe() == 13) agafaClau();
 			}
 			else if (block.collisionMoveRight(sprite->getPosition(), glm::vec2(18, 20))) {
 				new_angle = 3 * PI / 2 - (angle - 3 * PI / 2);
 				if (block.getTipe() == 7) *alarma = true;
-				else if (block.getTipe() != 15 && !(*blocks)[i].resistencia()) (*blocks).erase((*blocks).begin() + i);
+				else if (block.getTipe() != 15 && !(*blocks)[i].resistencia()) {
+					if (block.getTipe() == 1 || block.getTipe() == 3 || block.getTipe() == 17 || block.getTipe() == 19) *points += 100;
+					else if (block.getTipe() == 7) *money += 100;
+					else if (block.getTipe() == 9) *money += 200;
+					else if (block.getTipe() == 11) {
+						*money += *points;
+						*points = 0;
+					}
+					(*blocks).erase((*blocks).begin() + i);
+				}
 				if (block.getTipe() == 13) agafaClau();
 			}
 		}

@@ -9,6 +9,7 @@
 #include "Ball.h"
 #include "Block.h"
 #include "Vigilante.h"
+#include "Text.h"
 
 
 // Scene contains all the entities of our game.
@@ -59,8 +60,11 @@ private:
 	int pantalla;
 	int nivel;
 	int vidas;
+	int money;
+	int points;
 	bool alarma;
 	bool god;
+	Text text;
 };
 
 

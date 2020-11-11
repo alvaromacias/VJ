@@ -15,6 +15,8 @@
 #define INIT_PLAYER_X_TILES 11
 #define INIT_PLAYER_Y_TILES 21
 
+#define VIDAS 5
+
 
 Scene::Scene()
 {
@@ -59,14 +61,21 @@ void Scene::init()
 	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
 	player->setTileMap(map);
 	ball->setPlayer(player);
-	vidas = 2;
+	vidas = VIDAS;
 	god = false;
+	money = 0;
+	points = 0;
 
 	vigilante = new Vigilante();
 	vigilante->init(texProgram);
 
 	projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
 	currentTime = 0.0f;
+
+	if (!text.init("fonts/OpenSans-Regular.ttf"))
+		//if(!text.init("fonts/OpenSans-Bold.ttf"))
+		//if(!text.init("fonts/DroidSerif.ttf"))
+		cout << "Could not load font!!!" << endl;
 }
 
 void Scene::createBlockMap(const string &levelFile) {
@@ -170,7 +179,7 @@ void Scene::update(int deltaTime)
 		else setNivel(nivel + 1);
 	}
 	player->update(deltaTime);
-	ball->update(deltaTime, &alarma);
+	ball->update(deltaTime, &alarma, &money, &points);
 	if (alarma) vigilante->update(deltaTime, player->getPos());
 }
 
@@ -194,6 +203,7 @@ void Scene::createNivel2() {
 	createBlockSprites(blocks_3);
 	first = true;
 	nivel = 2;
+	vidas = VIDAS;
 	setPantalla(1);
 	player->setPosition(glm::vec2(176.f, 336.f));
 	ball->setPosition(glm::vec2(192.f, 320.f));
@@ -213,6 +223,7 @@ void Scene::createNivel3() {
 	createBlockSprites(blocks_3);
 	first = true;
 	nivel = 3;
+	vidas = VIDAS;
 	setPantalla(1);
 	player->setPosition(glm::vec2(176.f, 336.f));
 	ball->setPosition(glm::vec2(192.f, 320.f));
@@ -236,6 +247,21 @@ void Scene::render()
 	player->render();
 	ball->render();
 	if(alarma) vigilante->render();
+	
+	text.render("MONEY:", glm::vec2(27 * map->getTileSize(), 2 * map->getTileSize() + 8), 32, glm::vec4(1, 1, 1, 1));
+	text.render(to_string(money), glm::vec2(27 * map->getTileSize(), 4 * map->getTileSize() + 8), 32, glm::vec4(1, 1, 1, 1));
+
+	text.render("POINTS:", glm::vec2(27 * map->getTileSize(), 7 * map->getTileSize() + 8), 32, glm::vec4(1, 1, 1, 1));
+	text.render(to_string(points), glm::vec2(27 * map->getTileSize(), 9 * map->getTileSize() + 8), 32, glm::vec4(1, 1, 1, 1));
+
+	text.render("LIVES:", glm::vec2(27 * map->getTileSize(), 12 * map->getTileSize() + 8), 32, glm::vec4(1, 1, 1, 1));
+	text.render(to_string(vidas), glm::vec2(27 * map->getTileSize(), 14 * map->getTileSize() + 8), 32, glm::vec4(1, 1, 1, 1));
+
+	text.render("BANK:", glm::vec2(27 * map->getTileSize(), 17 * map->getTileSize() + 8), 32, glm::vec4(1, 1, 1, 1));
+	text.render(to_string(nivel), glm::vec2(27 * map->getTileSize(), 19 * map->getTileSize() + 8), 32, glm::vec4(1, 1, 1, 1));
+
+	text.render("ROOM:", glm::vec2(27 * map->getTileSize(), 22 * map->getTileSize() + 8), 32, glm::vec4(1, 1, 1, 1));
+	text.render(to_string(pantalla), glm::vec2(27 * map->getTileSize(), 24 * map->getTileSize() + 8), 32, glm::vec4(1, 1, 1, 1));
 }
 
 void Scene::renderBlocks(vector<Block> &blocks) {

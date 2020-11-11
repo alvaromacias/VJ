@@ -45,7 +45,8 @@ void Vigilante::update(int deltaTime, glm::vec2 posPlayer) {
 		wait = false;
 	}
 	else if (timeSinceStart + 3000 < glutGet(GLUT_ELAPSED_TIME) && !moving) {
-		posFin = posPlayer;
+		posFin.x = posPlayer.x + 32;
+		posFin.y = posPlayer.y + 32;
 		moving = true;
 	}
 	else if (moving) {
