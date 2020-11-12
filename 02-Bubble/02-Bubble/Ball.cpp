@@ -46,7 +46,7 @@ void Ball::update(int deltaTime, bool *alarma, int *money, int *points, bool jug
 				if (block.getTipe() == 7) *alarma = true;
 				else if (block.getTipe() != 15 && !(*blocks)[i].resistencia()) {
 					if (block.getTipe() == 1 || block.getTipe() == 3 || block.getTipe() == 17 || block.getTipe() == 19) *points += 100;
-					else if (block.getTipe() == 7) *money += 100;
+					else if (block.getTipe() == 5) *money += 100;
 					else if (block.getTipe() == 9) *money += 200;
 					else if (block.getTipe() == 11) {
 						*money += *points;
@@ -61,7 +61,7 @@ void Ball::update(int deltaTime, bool *alarma, int *money, int *points, bool jug
 				if (block.getTipe() == 7) *alarma = true;
 				else if (block.getTipe() != 15 && !(*blocks)[i].resistencia()) {
 					if (block.getTipe() == 1 || block.getTipe() == 3 || block.getTipe() == 17 || block.getTipe() == 19) *points += 100;
-					else if (block.getTipe() == 7) *money += 100;
+					else if (block.getTipe() == 5) *money += 100;
 					else if (block.getTipe() == 9) *money += 200;
 					else if (block.getTipe() == 11) {
 						*money += *points;
@@ -79,7 +79,7 @@ void Ball::update(int deltaTime, bool *alarma, int *money, int *points, bool jug
 				if (block.getTipe() == 7) *alarma = true;
 				else if (block.getTipe() != 15 && !(*blocks)[i].resistencia()) {
 					if (block.getTipe() == 1 || block.getTipe() == 3 || block.getTipe() == 17 || block.getTipe() == 19) *points += 100;
-					else if (block.getTipe() == 7) *money += 100;
+					else if (block.getTipe() == 5) *money += 100;
 					else if (block.getTipe() == 9) *money += 200;
 					else if (block.getTipe() == 11) {
 						*money += *points;
@@ -94,7 +94,7 @@ void Ball::update(int deltaTime, bool *alarma, int *money, int *points, bool jug
 				if (block.getTipe() == 7) *alarma = true;
 				else if (block.getTipe() != 15 && !(*blocks)[i].resistencia()) {
 					if (block.getTipe() == 1 || block.getTipe() == 3 || block.getTipe() == 17 || block.getTipe() == 19) *points += 100;
-					else if (block.getTipe() == 7) *money += 100;
+					else if (block.getTipe() == 5) *money += 100;
 					else if (block.getTipe() == 9) *money += 200;
 					else if (block.getTipe() == 11) {
 						*money += *points;
@@ -117,7 +117,7 @@ void Ball::update(int deltaTime, bool *alarma, int *money, int *points, bool jug
 				if (block.getTipe() == 7) *alarma = true;
 				else if (block.getTipe() != 15 && !(*blocks)[i].resistencia()) {
 					if (block.getTipe() == 1 || block.getTipe() == 3 || block.getTipe() == 17 || block.getTipe() == 19) *points += 100;
-					else if (block.getTipe() == 7) *money += 100;
+					else if (block.getTipe() == 5) *money += 100;
 					else if (block.getTipe() == 9) *money += 200;
 					else if (block.getTipe() == 11) {
 						*money += *points;
@@ -132,7 +132,7 @@ void Ball::update(int deltaTime, bool *alarma, int *money, int *points, bool jug
 				if (block.getTipe() == 7) *alarma = true;
 				else if (block.getTipe() != 15 && !(*blocks)[i].resistencia()) {
 					if (block.getTipe() == 1 || block.getTipe() == 3 || block.getTipe() == 17 || block.getTipe() == 19) *points += 100;
-					else if (block.getTipe() == 7) *money += 100;
+					else if (block.getTipe() == 5) *money += 100;
 					else if (block.getTipe() == 9) *money += 200;
 					else if (block.getTipe() == 11) {
 						*money += *points;
@@ -155,7 +155,7 @@ void Ball::update(int deltaTime, bool *alarma, int *money, int *points, bool jug
 				if (block.getTipe() == 7) *alarma = true;
 				else if (block.getTipe() != 15 && !(*blocks)[i].resistencia()) {
 					if (block.getTipe() == 1 || block.getTipe() == 3 || block.getTipe() == 17 || block.getTipe() == 19) *points += 100;
-					else if (block.getTipe() == 7) *money += 100;
+					else if (block.getTipe() == 5) *money += 100;
 					else if (block.getTipe() == 9) *money += 200;
 					else if (block.getTipe() == 11) {
 						*money += *points;
@@ -170,7 +170,7 @@ void Ball::update(int deltaTime, bool *alarma, int *money, int *points, bool jug
 				if (block.getTipe() == 7) *alarma = true;
 				else if (block.getTipe() != 15 && !(*blocks)[i].resistencia()) {
 					if (block.getTipe() == 1 || block.getTipe() == 3 || block.getTipe() == 17 || block.getTipe() == 19) *points += 100;
-					else if (block.getTipe() == 7) *money += 100;
+					else if (block.getTipe() == 5) *money += 100;
 					else if (block.getTipe() == 9) *money += 200;
 					else if (block.getTipe() == 11) {
 						*money += *points;
