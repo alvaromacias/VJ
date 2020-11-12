@@ -24,9 +24,9 @@ void Ball::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 	speed = 3;
 }
 
-void Ball::update(int deltaTime, bool *alarma, int *money, int *points)
+void Ball::update(int deltaTime, bool *alarma, int *money, int *points, bool jugar)
 {
-	if (Game::instance().getKey(' ') || Game::instance().getSpecialKey(GLUT_KEY_LEFT) || Game::instance().getSpecialKey(GLUT_KEY_RIGHT) ||
+	if (jugar && Game::instance().getKey(' ') || Game::instance().getSpecialKey(GLUT_KEY_LEFT) || Game::instance().getSpecialKey(GLUT_KEY_RIGHT) ||
 		Game::instance().getSpecialKey(GLUT_KEY_UP) || Game::instance().getSpecialKey(GLUT_KEY_DOWN)) {
 		stopped = false;
 	}
@@ -50,7 +50,7 @@ void Ball::update(int deltaTime, bool *alarma, int *money, int *points)
 				}
 				else if (block.getTipe() != 15 && !(*blocks)[i].resistencia()) {
 					if (block.getTipe() == 1 || block.getTipe() == 3 || block.getTipe() == 17 || block.getTipe() == 19) *points += 100;
-					else if (block.getTipe() == 7) *money += 100;
+					else if (block.getTipe() == 5) *money += 100;
 					else if (block.getTipe() == 9) *money += 200;
 					else if (block.getTipe() == 11) {
 						*money += *points;
@@ -73,7 +73,7 @@ void Ball::update(int deltaTime, bool *alarma, int *money, int *points)
 				}
 				else if (block.getTipe() != 15 && !(*blocks)[i].resistencia()) {
 					if (block.getTipe() == 1 || block.getTipe() == 3 || block.getTipe() == 17 || block.getTipe() == 19) *points += 100;
-					else if (block.getTipe() == 7) *money += 100;
+					else if (block.getTipe() == 5) *money += 100;
 					else if (block.getTipe() == 9) *money += 200;
 					else if (block.getTipe() == 11) {
 						*money += *points;
@@ -99,7 +99,7 @@ void Ball::update(int deltaTime, bool *alarma, int *money, int *points)
 				}
 				else if (block.getTipe() != 15 && !(*blocks)[i].resistencia()) {
 					if (block.getTipe() == 1 || block.getTipe() == 3 || block.getTipe() == 17 || block.getTipe() == 19) *points += 100;
-					else if (block.getTipe() == 7) *money += 100;
+					else if (block.getTipe() == 5) *money += 100;
 					else if (block.getTipe() == 9) *money += 200;
 					else if (block.getTipe() == 11) {
 						*money += *points;
@@ -122,7 +122,7 @@ void Ball::update(int deltaTime, bool *alarma, int *money, int *points)
 				}
 				else if (block.getTipe() != 15 && !(*blocks)[i].resistencia()) {
 					if (block.getTipe() == 1 || block.getTipe() == 3 || block.getTipe() == 17 || block.getTipe() == 19) *points += 100;
-					else if (block.getTipe() == 7) *money += 100;
+					else if (block.getTipe() == 5) *money += 100;
 					else if (block.getTipe() == 9) *money += 200;
 					else if (block.getTipe() == 11) {
 						*money += *points;
@@ -159,7 +159,7 @@ void Ball::update(int deltaTime, bool *alarma, int *money, int *points)
 				}
 				else if (block.getTipe() != 15 && !(*blocks)[i].resistencia()) {
 					if (block.getTipe() == 1 || block.getTipe() == 3 || block.getTipe() == 17 || block.getTipe() == 19) *points += 100;
-					else if (block.getTipe() == 7) *money += 100;
+					else if (block.getTipe() == 5) *money += 100;
 					else if (block.getTipe() == 9) *money += 200;
 					else if (block.getTipe() == 11) {
 						*money += *points;
@@ -182,7 +182,7 @@ void Ball::update(int deltaTime, bool *alarma, int *money, int *points)
 				}
 				else if (block.getTipe() != 15 && !(*blocks)[i].resistencia()) {
 					if (block.getTipe() == 1 || block.getTipe() == 3 || block.getTipe() == 17 || block.getTipe() == 19) *points += 100;
-					else if (block.getTipe() == 7) *money += 100;
+					else if (block.getTipe() == 5) *money += 100;
 					else if (block.getTipe() == 9) *money += 200;
 					else if (block.getTipe() == 11) {
 						*money += *points;
@@ -220,7 +220,7 @@ void Ball::update(int deltaTime, bool *alarma, int *money, int *points)
 				}
 				else if (block.getTipe() != 15 && !(*blocks)[i].resistencia()) {
 					if (block.getTipe() == 1 || block.getTipe() == 3 || block.getTipe() == 17 || block.getTipe() == 19) *points += 100;
-					else if (block.getTipe() == 7) *money += 100;
+					else if (block.getTipe() == 5) *money += 100;
 					else if (block.getTipe() == 9) *money += 200;
 					else if (block.getTipe() == 11) {
 						*money += *points;
@@ -243,7 +243,7 @@ void Ball::update(int deltaTime, bool *alarma, int *money, int *points)
 				}
 				else if (block.getTipe() != 15 && !(*blocks)[i].resistencia()) {
 					if (block.getTipe() == 1 || block.getTipe() == 3 || block.getTipe() == 17 || block.getTipe() == 19) *points += 100;
-					else if (block.getTipe() == 7) *money += 100;
+					else if (block.getTipe() == 5) *money += 100;
 					else if (block.getTipe() == 9) *money += 200;
 					else if (block.getTipe() == 11) {
 						*money += *points;

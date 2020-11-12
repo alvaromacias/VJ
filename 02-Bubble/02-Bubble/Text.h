@@ -40,6 +40,7 @@ public:
 	int getSize() const;
 	void render(char c, const glm::vec2 &pixel, int size, const glm::vec4 &color);
 	void render(const string &str, const glm::vec2 &pixel, int size, const glm::vec4 &color);
+	void render(const string &str, const glm::vec2 &pixel, int size, const glm::vec4 &color, glm::mat4 &projection);
 
 private:
 	void initShaders();

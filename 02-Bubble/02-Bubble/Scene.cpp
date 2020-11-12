@@ -35,8 +35,15 @@ Scene::~Scene()
 
 void Scene::init()
 {
+	glm::vec2 geom[2] = { glm::vec2(0.f, 0.f), glm::vec2(SCREEN_WIDTH, SCREEN_HEIGHT) };
+	glm::vec2 texCoords[2] = { glm::vec2(0.f, 0.f), glm::vec2(1.f, 1.f) };
+
 	initShaders();
 	map = TileMap::createTileMap("levels/fondo.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
+
+	texCoords[0] = glm::vec2(0.f, 0.f); texCoords[1] = glm::vec2(1.f, 1.f);
+	texQuad = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
+	negroQuad = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
 
 	ball = new Ball();
 	ball->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
@@ -67,6 +74,10 @@ void Scene::init()
 	money = 0;
 	points = 0;
 	restart = false;
+	menu = true;
+	instrucciones = false;
+	jugar = false;
+	creditos = false;
 
 	vigilante = new Vigilante();
 	vigilante->init(texProgram);
@@ -74,9 +85,9 @@ void Scene::init()
 	projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
 	currentTime = 0.0f;
 
-	if (!text.init("fonts/OpenSans-Regular.ttf"))
+	//if (!text.init("fonts/Vintage.ttf"))
 	//if(!text.init("fonts/OpenSans-Bold.ttf"))
-	//if(!text.init("fonts/DroidSerif.ttf"))
+	if(!text.init("fonts/DroidSerif.ttf"))
 		cout << "Could not load font!!!" << endl;
 }
 
@@ -138,7 +149,7 @@ void Scene::createBlockSprites(vector<Block> &blocks) {
 					spritePos.x = (blockMap[j * 24 + i] - 17.f) / 16.f;
 					spritePos.y = 0.5f;
 				}
-				//crea sprites de diners, alarm, telefon/calculadora el q sigui i clau (blocs de 32x32)
+				//crea sprites de diners, alarma, telefon/calculadora el q sigui i clau (blocs de 32x32)
 				if (blockMap[j * 24 + i] == 5 || blockMap[j * 24 + i] == 7 || blockMap[j * 24 + i] == 9 || blockMap[j * 24 + i] == 11 || blockMap[j * 24 + i] == 13) {
 					Block *block = Block::createBlock(glm::ivec2(32, 32), glm::vec2(0.125f, 1.f), &spritesheet, &texProgram, blockMap[j * 24 + i], glm::vec2(16 * i + 32, 16 * j + 16), 1, spritePos);
 					
@@ -162,11 +173,11 @@ void Scene::createBlockSprites(vector<Block> &blocks) {
 
 void Scene::die() {
 	if (vidas == 0) {
+		jugar = false;
 		restart = true;
 		Game::instance().getEngine()->play2D("audio/smw_game_over.wav");
 	}
 	else {
-		Game::instance().getEngine()->play2D("audio/smw_blargg.wav");
 		if (!god) --vidas;
 		player->setPosition(glm::vec2(176.f, 336.f));
 		ball->setStopped(true);
@@ -201,11 +212,14 @@ void Scene::update(int deltaTime)
 		}
 		else if (ball->getPos().y > 370) die();
 		if (pantalla == 3 && ball->ganastebro()) {
-			if (nivel == 3) setNivel(1);
+			if (nivel == 3) {
+				creditos = true;
+				jugar = false;
+			}
 			else setNivel(nivel + 1);
 		}
 		player->update(deltaTime);
-		ball->update(deltaTime, &alarma, &money, &points);
+		ball->update(deltaTime, &alarma, &money, &points, jugar);
 		if (alarma && pantallaVigilante()) {
 			if (vigilante->update(deltaTime, player->getPos())) die();
 		}
@@ -272,33 +286,81 @@ void Scene::render()
 	modelview = glm::mat4(1.0f);
 	texProgram.setUniformMatrix4f("modelview", modelview);
 	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
-	map->render();
-	if (pantalla == 1) renderBlocks(blocks_1);
-	else if (pantalla == 2) renderBlocks(blocks_2);
-	else if (pantalla == 3) renderBlocks(blocks_3);
-	player->render();
-	ball->render();
-	if(alarma && pantallaVigilante()) vigilante->render();
-	
-	text.render("MONEY:", glm::vec2(27 * map->getTileSize(), 2 * map->getTileSize() + 8), 32, glm::vec4(1, 1, 1, 1));
-	text.render(to_string(money), glm::vec2(27 * map->getTileSize(), 4 * map->getTileSize() + 8), 32, glm::vec4(1, 1, 1, 1));
+	if (menu) {
+		texs.loadFromFile("images/menu.png", TEXTURE_PIXEL_FORMAT_RGBA);
+		texQuad->render(texs);
+		text.render("PRESS 'P' TO PLAY", glm::vec2(8 * map->getTileSize(), 22 * map->getTileSize()), 32, glm::vec4(0, 0, 1, 1), projection);
+		text.render("PRESS 'I' FOR INSTRUCTIONS", glm::vec2(8 * map->getTileSize(), 24 * map->getTileSize()), 32, glm::vec4(0, 0, 1, 1), projection);
+		text.render("PRESS 'C' FOR CREDITS", glm::vec2(8 * map->getTileSize(), 26 * map->getTileSize()), 32, glm::vec4(0, 0, 1, 1), projection);
+		if (Game::instance().getKey('i') || Game::instance().getKey('I')) instrucciones = true;
+		else if (Game::instance().getKey('p') || Game::instance().getKey('P')) jugar = true;
+		else if (Game::instance().getKey('c') || Game::instance().getKey('C')) creditos = true;
+	}
+	if (jugar) {
+		menu = false;
+		map->render();
+		if (pantalla == 1) renderBlocks(blocks_1);
+		else if (pantalla == 2) renderBlocks(blocks_2);
+		else if (pantalla == 3) renderBlocks(blocks_3);
+		player->render();
+		ball->render();
+		if (alarma && pantallaVigilante()) vigilante->render();
 
-	text.render("POINTS:", glm::vec2(27 * map->getTileSize(), 7 * map->getTileSize() + 8), 32, glm::vec4(1, 1, 1, 1));
-	text.render(to_string(points), glm::vec2(27 * map->getTileSize(), 9 * map->getTileSize() + 8), 32, glm::vec4(1, 1, 1, 1));
+		text.render("MONEY:", glm::vec2(27 * map->getTileSize(), 2 * map->getTileSize() + 8), 32, glm::vec4(1, 1, 1, 1), projection);
+		text.render(to_string(money), glm::vec2(27 * map->getTileSize(), 4 * map->getTileSize() + 8), 32, glm::vec4(1, 1, 1, 1), projection);
 
-	text.render("LIVES:", glm::vec2(27 * map->getTileSize(), 12 * map->getTileSize() + 8), 32, glm::vec4(1, 1, 1, 1));
-	text.render(to_string(vidas), glm::vec2(27 * map->getTileSize(), 14 * map->getTileSize() + 8), 32, glm::vec4(1, 1, 1, 1));
+		text.render("POINTS:", glm::vec2(27 * map->getTileSize(), 7 * map->getTileSize() + 8), 32, glm::vec4(1, 1, 1, 1), projection);
+		text.render(to_string(points), glm::vec2(27 * map->getTileSize(), 9 * map->getTileSize() + 8), 32, glm::vec4(1, 1, 1, 1), projection);
 
-	text.render("BANK:", glm::vec2(27 * map->getTileSize(), 17 * map->getTileSize() + 8), 32, glm::vec4(1, 1, 1, 1));
-	text.render(to_string(nivel), glm::vec2(27 * map->getTileSize(), 19 * map->getTileSize() + 8), 32, glm::vec4(1, 1, 1, 1));
+		text.render("LIVES:", glm::vec2(27 * map->getTileSize(), 12 * map->getTileSize() + 8), 32, glm::vec4(1, 1, 1, 1), projection);
+		text.render(to_string(vidas), glm::vec2(27 * map->getTileSize(), 14 * map->getTileSize() + 8), 32, glm::vec4(1, 1, 1, 1), projection);
 
-	text.render("ROOM:", glm::vec2(27 * map->getTileSize(), 22 * map->getTileSize() + 8), 32, glm::vec4(1, 1, 1, 1));
-	text.render(to_string(pantalla), glm::vec2(27 * map->getTileSize(), 24 * map->getTileSize() + 8), 32, glm::vec4(1, 1, 1, 1));
-	
+		text.render("BANK:", glm::vec2(27 * map->getTileSize(), 17 * map->getTileSize() + 8), 32, glm::vec4(1, 1, 1, 1), projection);
+		text.render(to_string(nivel), glm::vec2(27 * map->getTileSize(), 19 * map->getTileSize() + 8), 32, glm::vec4(1, 1, 1, 1), projection);
+
+		text.render("ROOM:", glm::vec2(27 * map->getTileSize(), 22 * map->getTileSize() + 8), 32, glm::vec4(1, 1, 1, 1), projection);
+		text.render(to_string(pantalla), glm::vec2(27 * map->getTileSize(), 24 * map->getTileSize() + 8), 32, glm::vec4(1, 1, 1, 1), projection);
+	}
+
 	if (restart) {
-		text.render("GAME OVER!", glm::vec2(10 * map->getTileSize(), 10 * map->getTileSize()), 64, glm::vec4(1, 0, 0, 1));
-		text.render("PRESS 'R' TO RESTART", glm::vec2(10 * map->getTileSize(), 14 * map->getTileSize()), 32, glm::vec4(1, 0, 0, 1));
-		if (Game::instance().getKey('r')) init();
+		texs.loadFromFile("images/negro.png", TEXTURE_PIXEL_FORMAT_RGBA);
+		negroQuad->render(texs);
+		text.render("GAME OVER!", glm::vec2(8 * map->getTileSize(), 10 * map->getTileSize()), 64, glm::vec4(1, 0, 0, 1), projection);
+		text.render("PRESS 'R' TO RESTART", glm::vec2(4 * map->getTileSize(), 14 * map->getTileSize()), 32, glm::vec4(1, 0, 0, 1), projection);
+		text.render("PRESS 'M' TO GO TO THE MENU", glm::vec2(4 * map->getTileSize(), 16 * map->getTileSize()), 32, glm::vec4(1, 0, 0, 1), projection);
+		if (Game::instance().getKey('r') || Game::instance().getKey('R')) {
+			init();
+			menu = false;
+			jugar = true;
+			restart = false;
+		}
+		else if (Game::instance().getKey('m') || Game::instance().getKey('M')) init();
+	}
+	if (instrucciones) {
+		menu = false;
+		texs.loadFromFile("images/negro.png", TEXTURE_PIXEL_FORMAT_RGBA);
+		negroQuad->render(texs);
+		text.render("INSTRUCTIONS", glm::vec2(4 * map->getTileSize(), 7 * map->getTileSize()), 64, glm::vec4(1, 0, 0, 1), projection);
+		text.render("Press 1, 2, 3 to navigate through", glm::vec2(4 * map->getTileSize(), 13 * map->getTileSize()), 28, glm::vec4(1, 0, 0, 1), projection);
+		text.render("the rooms of a bank", glm::vec2(8 * map->getTileSize(), 15 * map->getTileSize()), 28, glm::vec4(1, 0, 0, 1));
+		text.render("Press 'Q', 'W', 'E' to navigate through banks", glm::vec2(4 * map->getTileSize(), 17 * map->getTileSize()), 28, glm::vec4(1, 0, 0, 1), projection);
+		text.render("Press 'G' to activate god mode", glm::vec2(4 * map->getTileSize(), 19 * map->getTileSize()), 28, glm::vec4(1, 0, 0, 1), projection);
+		text.render("Use the arrows to move the player", glm::vec2(4 * map->getTileSize(), 21 * map->getTileSize()), 28, glm::vec4(1, 0, 0, 1), projection);
+		text.render("Press ESP to get the ball rolling", glm::vec2(4 * map->getTileSize(), 23 * map->getTileSize()), 28, glm::vec4(1, 0, 0, 1), projection);
+		text.render("Press 'M' to go back to menu", glm::vec2(10 * map->getTileSize(), 29 * map->getTileSize()), 20, glm::vec4(1, 0, 0, 1), projection);
+		if (Game::instance().getKey('m') || Game::instance().getKey('M')) init();
+	}
+	if (creditos) {
+		menu = false;
+		texs.loadFromFile("images/negro.png", TEXTURE_PIXEL_FORMAT_RGBA);
+		negroQuad->render(texs);
+		text.render("CREDITS", glm::vec2(8 * map->getTileSize(), 7 * map->getTileSize()), 64, glm::vec4(1, 0, 0, 1), projection);
+		text.render("Created by:", glm::vec2(4 * map->getTileSize(), 13 * map->getTileSize()), 28, glm::vec4(1, 0, 0, 1), projection);
+		text.render("Alvaro Macias", glm::vec2(10 * map->getTileSize(), 15 * map->getTileSize()), 28, glm::vec4(1, 0, 0, 1), projection);
+		text.render("Marta Gil", glm::vec2(10 * map->getTileSize(), 17 * map->getTileSize()), 28, glm::vec4(1, 0, 0, 1), projection);
+		text.render("Based on Break In by ALTECO", glm::vec2(4 * map->getTileSize(), 21 * map->getTileSize()), 28, glm::vec4(1, 0, 0, 1), projection);
+		text.render("Press 'M' to go back to menu", glm::vec2(10 * map->getTileSize(), 29 * map->getTileSize()), 20, glm::vec4(1, 0, 0, 1), projection);
+		if (Game::instance().getKey('m') || Game::instance().getKey('M')) init();
 	}
 }
 

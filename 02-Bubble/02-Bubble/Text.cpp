@@ -138,6 +138,36 @@ void Text::render(const string &str, const glm::vec2 &pixel, int size, const glm
 	glDisable(GL_BLEND);
 }
 
+void Text::render(const string &str, const glm::vec2 &pixel, int size, const glm::vec4 &color, glm::mat4 &projection)
+{
+	int vp[4];
+	glm::mat4 modelview;
+	glm::vec2 minTexCoord, maxTexCoord, pos = pixel;
+
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glEnable(GL_BLEND);
+	program.use();
+	glGetIntegerv(GL_VIEWPORT, vp);
+	program.setUniformMatrix4f("projection", projection);
+	program.setUniform4f("color", color.r, color.g, color.b, color.a);
+
+	for (unsigned int i = 0; i<str.length(); i++)
+	{
+		modelview = glm::mat4(1.0f);
+		modelview = glm::translate(modelview, glm::vec3(pos.x + (float(size) / fontSize) * chars[str[i] - 32].bl, pos.y - (float(size) / fontSize) * chars[str[i] - 32].bt, 0.f));
+		modelview = glm::scale(modelview, (float(size) / fontSize) * glm::vec3(chars[str[i] - 32].sx, chars[str[i] - 32].sy, 0.f));
+		program.setUniformMatrix4f("modelview", modelview);
+		minTexCoord = glm::vec2(float(chars[str[i] - 32].tx) / textureSize, float(chars[str[i] - 32].ty) / textureSize);
+		maxTexCoord = glm::vec2(float(chars[str[i] - 32].tx + chars[str[i] - 32].sx) / textureSize, float(chars[str[i] - 32].ty + chars[str[i] - 32].sy) / textureSize);
+		program.setUniform2f("minTexCoord", minTexCoord.s, minTexCoord.t);
+		program.setUniform2f("maxTexCoord", maxTexCoord.s, maxTexCoord.t);
+		quad->render(textureAtlas);
+		pos.x += (float(size) / fontSize) * chars[str[i] - 32].ax;
+	}
+
+	glDisable(GL_BLEND);
+}
+
 void Text::initShaders()
 {
 	Shader vShader, fShader;
