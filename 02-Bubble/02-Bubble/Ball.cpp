@@ -43,7 +43,11 @@ void Ball::update(int deltaTime, bool *alarma, int *money, int *points)
 		if (angle <= PI / 2) { //primer quadrant
 			if (block.collisionMoveUp(sprite->getPosition(), glm::vec2(18, 20))) {
 				new_angle = 2 * PI - angle;
-				if (block.getTipe() == 7) *alarma = true;
+				if (block.getTipe() == 15 || block.getTipe() == 3 || block.getTipe() == 19 || block.getTipe() == 1 || block.getTipe() == 17) Game::instance().getEngine()->play2D("audio/solid.wav");
+				if (block.getTipe() == 7) {
+					if(!*alarma) alarmSound = Game::instance().getEngine()->play2D("audio/alarm2.wav", true, false, true);
+					*alarma = true;
+				}
 				else if (block.getTipe() != 15 && !(*blocks)[i].resistencia()) {
 					if (block.getTipe() == 1 || block.getTipe() == 3 || block.getTipe() == 17 || block.getTipe() == 19) *points += 100;
 					else if (block.getTipe() == 7) *money += 100;
@@ -51,14 +55,22 @@ void Ball::update(int deltaTime, bool *alarma, int *money, int *points)
 					else if (block.getTipe() == 11) {
 						*money += *points;
 						*points = 0;
+						Game::instance().getEngine()->play2D("audio/smw_power-up_appears.wav");
 					}
 					(*blocks).erase((*blocks).begin() + i);
 				}
-				if (block.getTipe() == 13) agafaClau();
+				if (block.getTipe() == 13) {
+					agafaClau();
+					Game::instance().getEngine()->play2D("audio/smw_keyhole_exit.wav");
+				}
 			}
 			else if (block.collisionMoveRight(sprite->getPosition(), glm::vec2(18, 20))) {
 				new_angle = PI - angle;
-				if (block.getTipe() == 7) *alarma = true;
+				if (block.getTipe() == 15 || block.getTipe() == 3 || block.getTipe() == 19 || block.getTipe() == 1 || block.getTipe() == 17) Game::instance().getEngine()->play2D("audio/solid.wav");
+				if (block.getTipe() == 7) {
+					if (!*alarma) alarmSound = Game::instance().getEngine()->play2D("audio/alarm2.wav", true, false, true);
+					*alarma = true;
+				}
 				else if (block.getTipe() != 15 && !(*blocks)[i].resistencia()) {
 					if (block.getTipe() == 1 || block.getTipe() == 3 || block.getTipe() == 17 || block.getTipe() == 19) *points += 100;
 					else if (block.getTipe() == 7) *money += 100;
@@ -66,17 +78,25 @@ void Ball::update(int deltaTime, bool *alarma, int *money, int *points)
 					else if (block.getTipe() == 11) {
 						*money += *points;
 						*points = 0;
+						Game::instance().getEngine()->play2D("audio/smw_power-up_appears.wav");
 					}
 					(*blocks).erase((*blocks).begin() + i);
 				}
-				if (block.getTipe() == 13) agafaClau();
+				if (block.getTipe() == 13) {
+					agafaClau();
+					Game::instance().getEngine()->play2D("audio/smw_keyhole_exit.wav");
+				}
 			}
 		}
 		else if (angle >= PI / 2 && angle <= PI) //segon quadrant
 		{
 			if (block.collisionMoveUp(sprite->getPosition(), glm::vec2(18, 20))) {
 				new_angle = 2 * PI - angle;
-				if (block.getTipe() == 7) *alarma = true;
+				if (block.getTipe() == 15 || block.getTipe() == 3 || block.getTipe() == 19 || block.getTipe() == 1 || block.getTipe() == 17) Game::instance().getEngine()->play2D("audio/solid.wav");
+				if (block.getTipe() == 7) {
+					if (!*alarma) alarmSound = Game::instance().getEngine()->play2D("audio/alarm2.wav", true, false, true);
+					*alarma = true;
+				}
 				else if (block.getTipe() != 15 && !(*blocks)[i].resistencia()) {
 					if (block.getTipe() == 1 || block.getTipe() == 3 || block.getTipe() == 17 || block.getTipe() == 19) *points += 100;
 					else if (block.getTipe() == 7) *money += 100;
@@ -84,14 +104,22 @@ void Ball::update(int deltaTime, bool *alarma, int *money, int *points)
 					else if (block.getTipe() == 11) {
 						*money += *points;
 						*points = 0;
+						Game::instance().getEngine()->play2D("audio/smw_power-up_appears.wav");
 					}
 					(*blocks).erase((*blocks).begin() + i);
 				}
-				if (block.getTipe() == 13) agafaClau();
+				if (block.getTipe() == 13) {
+					agafaClau();
+					Game::instance().getEngine()->play2D("audio/smw_keyhole_exit.wav");
+				}
 			}
 			else if (block.collisionMoveLeft(sprite->getPosition(), glm::vec2(18, 20))) {
 				new_angle = PI - angle;
-				if (block.getTipe() == 7) *alarma = true;
+				if (block.getTipe() == 15 || block.getTipe() == 3 || block.getTipe() == 19 || block.getTipe() == 1 || block.getTipe() == 17) Game::instance().getEngine()->play2D("audio/solid.wav");
+				if (block.getTipe() == 7) {
+					if (!*alarma) alarmSound = Game::instance().getEngine()->play2D("audio/alarm2.wav", true, false, true);
+					*alarma = true;
+				}
 				else if (block.getTipe() != 15 && !(*blocks)[i].resistencia()) {
 					if (block.getTipe() == 1 || block.getTipe() == 3 || block.getTipe() == 17 || block.getTipe() == 19) *points += 100;
 					else if (block.getTipe() == 7) *money += 100;
@@ -99,22 +127,36 @@ void Ball::update(int deltaTime, bool *alarma, int *money, int *points)
 					else if (block.getTipe() == 11) {
 						*money += *points;
 						*points = 0;
+						Game::instance().getEngine()->play2D("audio/smw_power-up_appears.wav");
 					}
 					(*blocks).erase((*blocks).begin() + i);
 				}
-				if (block.getTipe() == 13) agafaClau();
+				if (block.getTipe() == 13) {
+					agafaClau();
+					Game::instance().getEngine()->play2D("audio/smw_keyhole_exit.wav");
+				}
 			}
 		}
 		else if (angle >= PI && angle <= 3 * PI / 2) //tercer quadrant
 		{
 			if (player->collisionMoveDown(sprite->getPosition(), glm::vec2(18, 20))) {
-				new_angle = 90 * PI / 180 - player->PositionOfPlayerWhereColision(sprite->getPosition(), size) * 45 * PI / 180;
-				if (new_angle > (90 + 30)*PI / 180 || new_angle < (90 - 30)*PI / 180) speed = 5;
-				else speed = 3;
+				if (!godMode && player->PositionOfPlayerWhereColision(sprite->getPosition(), size) > 0.9) {
+					new_angle = 330 * PI / 180;
+					speed = 5;
+				} else {
+					new_angle = 90 * PI / 180 - player->PositionOfPlayerWhereColision(sprite->getPosition(), size) * 45 * PI / 180;
+					if (new_angle > (90 + 30)*PI / 180 || new_angle < (90 - 30)*PI / 180) speed = 5;
+					else speed = 3;
+				}
+				Game::instance().getEngine()->play2D("audio/bleep.wav");
 			}
 			else if (block.collisionMoveDown(sprite->getPosition(), glm::vec2(18, 20))) {
+				if (block.getTipe() == 15 || block.getTipe() == 3 || block.getTipe() == 19 || block.getTipe() == 1 || block.getTipe() == 17) Game::instance().getEngine()->play2D("audio/solid.wav");
 				new_angle = PI - (angle - PI);
-				if (block.getTipe() == 7) *alarma = true;
+				if (block.getTipe() == 7) {
+					if (!*alarma) alarmSound = Game::instance().getEngine()->play2D("audio/alarm2.wav", true, false, true);
+					*alarma = true;
+				}
 				else if (block.getTipe() != 15 && !(*blocks)[i].resistencia()) {
 					if (block.getTipe() == 1 || block.getTipe() == 3 || block.getTipe() == 17 || block.getTipe() == 19) *points += 100;
 					else if (block.getTipe() == 7) *money += 100;
@@ -122,14 +164,22 @@ void Ball::update(int deltaTime, bool *alarma, int *money, int *points)
 					else if (block.getTipe() == 11) {
 						*money += *points;
 						*points = 0;
+						Game::instance().getEngine()->play2D("audio/smw_power-up_appears.wav");
 					}
 					(*blocks).erase((*blocks).begin() + i);
 				}
-				if (block.getTipe() == 13) agafaClau();
+				if (block.getTipe() == 13) {
+					agafaClau();
+					Game::instance().getEngine()->play2D("audio/smw_keyhole_exit.wav");
+				}
 			}
 			else if (block.collisionMoveLeft(sprite->getPosition(), glm::vec2(18, 20))) {
 				new_angle = 2 * PI - (angle - PI);
-				if (block.getTipe() == 7) *alarma = true;
+				if (block.getTipe() == 15 || block.getTipe() == 3 || block.getTipe() == 19 || block.getTipe() == 1 || block.getTipe() == 17) Game::instance().getEngine()->play2D("audio/solid.wav");
+				if (block.getTipe() == 7) {
+					if (!*alarma) alarmSound = Game::instance().getEngine()->play2D("audio/alarm2.wav", true, false, true);
+					*alarma = true;
+				}
 				else if (block.getTipe() != 15 && !(*blocks)[i].resistencia()) {
 					if (block.getTipe() == 1 || block.getTipe() == 3 || block.getTipe() == 17 || block.getTipe() == 19) *points += 100;
 					else if (block.getTipe() == 7) *money += 100;
@@ -137,22 +187,37 @@ void Ball::update(int deltaTime, bool *alarma, int *money, int *points)
 					else if (block.getTipe() == 11) {
 						*money += *points;
 						*points = 0;
+						Game::instance().getEngine()->play2D("audio/smw_power-up_appears.wav");
 					}
 					(*blocks).erase((*blocks).begin() + i);
 				}
-				if (block.getTipe() == 13) agafaClau();
+				if (block.getTipe() == 13) {
+					agafaClau();
+					Game::instance().getEngine()->play2D("audio/smw_keyhole_exit.wav");
+				}
 			}
 		}
 		else if (angle >= 3 * PI / 2) //quart quadrant
 		{
 			if (player->collisionMoveDown(sprite->getPosition(), glm::vec2(18, 20))) {
-				new_angle = 90*PI/180 - player->PositionOfPlayerWhereColision(sprite->getPosition(), size) * 45*PI/180;
-				if (new_angle > (90 + 30)*PI / 180 || new_angle < (90 - 30)*PI / 180) speed = 5;
-				else speed = 3;
+				if (!godMode && player->PositionOfPlayerWhereColision(sprite->getPosition(), size) < 0.1) {
+					new_angle = 210 * PI / 180;
+					speed = 5;
+				}
+				else {
+					new_angle = 90 * PI / 180 - player->PositionOfPlayerWhereColision(sprite->getPosition(), size) * 45 * PI / 180;
+					if (new_angle > (90 + 30)*PI / 180 || new_angle < (90 - 30)*PI / 180) speed = 5;
+					else speed = 3;
+				}
+				Game::instance().getEngine()->play2D("audio/bleep.wav");
 			}
 			if (block.collisionMoveDown(sprite->getPosition(), glm::vec2(18, 20))) {
 				new_angle = 2 * PI - angle;
-				if (block.getTipe() == 7) *alarma = true;
+				if (block.getTipe() == 15 || block.getTipe() == 3 || block.getTipe() == 19 || block.getTipe() == 1 || block.getTipe() == 17) Game::instance().getEngine()->play2D("audio/solid.wav");
+				if (block.getTipe() == 7) {
+					if (!*alarma) alarmSound = Game::instance().getEngine()->play2D("audio/alarm2.wav", true, false, true);
+					*alarma = true;
+				}
 				else if (block.getTipe() != 15 && !(*blocks)[i].resistencia()) {
 					if (block.getTipe() == 1 || block.getTipe() == 3 || block.getTipe() == 17 || block.getTipe() == 19) *points += 100;
 					else if (block.getTipe() == 7) *money += 100;
@@ -160,14 +225,22 @@ void Ball::update(int deltaTime, bool *alarma, int *money, int *points)
 					else if (block.getTipe() == 11) {
 						*money += *points;
 						*points = 0;
+						Game::instance().getEngine()->play2D("audio/smw_power-up_appears.wav");
 					}
 					(*blocks).erase((*blocks).begin() + i);
 				}
-				if (block.getTipe() == 13) agafaClau();
+				if (block.getTipe() == 13) {
+					agafaClau();
+					Game::instance().getEngine()->play2D("audio/smw_keyhole_exit.wav");
+				}
 			}
 			else if (block.collisionMoveRight(sprite->getPosition(), glm::vec2(18, 20))) {
 				new_angle = 3 * PI / 2 - (angle - 3 * PI / 2);
-				if (block.getTipe() == 7) *alarma = true;
+				if (block.getTipe() == 15 || block.getTipe() == 3 || block.getTipe() == 19 || block.getTipe() == 1 || block.getTipe() == 17) Game::instance().getEngine()->play2D("audio/solid.wav");
+				if (block.getTipe() == 7) {
+					if (!*alarma) alarmSound = Game::instance().getEngine()->play2D("audio/alarm2.wav", true, false, true);
+					*alarma = true;
+				}
 				else if (block.getTipe() != 15 && !(*blocks)[i].resistencia()) {
 					if (block.getTipe() == 1 || block.getTipe() == 3 || block.getTipe() == 17 || block.getTipe() == 19) *points += 100;
 					else if (block.getTipe() == 7) *money += 100;
@@ -175,10 +248,14 @@ void Ball::update(int deltaTime, bool *alarma, int *money, int *points)
 					else if (block.getTipe() == 11) {
 						*money += *points;
 						*points = 0;
+						Game::instance().getEngine()->play2D("audio/smw_power-up_appears.wav");
 					}
 					(*blocks).erase((*blocks).begin() + i);
 				}
-				if (block.getTipe() == 13) agafaClau();
+				if (block.getTipe() == 13) {
+					agafaClau();
+					Game::instance().getEngine()->play2D("audio/smw_keyhole_exit.wav");
+				}
 			}
 		}
 	}
@@ -238,4 +315,12 @@ void Ball::setPlayer(Player *newPlayer)
 
 void Ball::setStopped(bool b) {
 	stopped = b;
+}
+
+void Ball::setGodMode(bool b) {
+	godMode = b;
+}
+
+void Ball::stopAlarma() {
+	alarmSound->stop();
 }

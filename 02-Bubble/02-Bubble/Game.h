@@ -3,6 +3,9 @@
 
 
 #include "Scene.h"
+#include <irrKlang.h>
+using namespace irrklang;
+#pragma comment(lib, "irrKlang.lib")
 
 
 #define SCREEN_WIDTH 640
@@ -41,8 +44,10 @@ public:
 	
 	bool getKey(int key) const;
 	bool getSpecialKey(int key) const;
+	ISoundEngine* Game::getEngine();
 
 private:
+	ISoundEngine* engine;
 	bool bPlay;                       // Continue to play game?
 	Scene scene;                      // Scene to render
 	bool keys[256], specialKeys[256]; // Store key states so that 

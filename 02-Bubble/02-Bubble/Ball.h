@@ -6,6 +6,8 @@
 #include "TileMap.h"
 #include "Block.h"
 #include "Player.h"
+#include <irrKlang.h>
+using namespace irrklang;
 
 
 // Ball is basically a Sprite that represents the ball.
@@ -28,6 +30,8 @@ public:
 	bool ganastebro();
 	void setStopped(bool b);
 	void setAngle(double a);
+	void Ball::stopAlarma();
+	void Ball::setGodMode(bool b);
 
 private:
 	glm::ivec2 tileMapDispl;
@@ -42,6 +46,8 @@ private:
 	ShaderProgram texProgram;
 	glm::vec2 size;
 	float speed;
+	ISound* alarmSound;
+	bool godMode;
 };
 
 

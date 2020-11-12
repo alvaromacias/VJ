@@ -5,6 +5,7 @@
 
 void Game::init()
 {
+	engine = createIrrKlangDevice();
 	bPlay = true;
 	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
 	scene.init();
@@ -79,6 +80,11 @@ bool Game::getKey(int key) const
 bool Game::getSpecialKey(int key) const
 {
 	return specialKeys[key];
+}
+
+ISoundEngine* Game::getEngine()
+{
+	return engine;
 }
 
 

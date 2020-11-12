@@ -63,6 +63,7 @@ void Scene::init()
 	ball->setPlayer(player);
 	vidas = VIDAS;
 	god = false;
+	ball->setGodMode(false);
 	money = 0;
 	points = 0;
 	restart = false;
@@ -160,9 +161,12 @@ void Scene::createBlockSprites(vector<Block> &blocks) {
 }
 
 void Scene::die() {
-	if (vidas == 0)
+	if (vidas == 0) {
 		restart = true;
+		Game::instance().getEngine()->play2D("audio/smw_game_over.wav");
+	}
 	else {
+		Game::instance().getEngine()->play2D("audio/smw_blargg.wav");
 		if (!god) --vidas;
 		player->setPosition(glm::vec2(176.f, 336.f));
 		ball->setStopped(true);
@@ -171,6 +175,7 @@ void Scene::die() {
 		if (alarma) {
 			vigilante->init(texProgram);
 			alarma = false;
+			ball->stopAlarma();
 		}
 		setPantalla(1);
 	}
@@ -186,8 +191,14 @@ void Scene::update(int deltaTime)
 {
 	if (!restart) {
 		currentTime += deltaTime;
-		if (ball->getPos().y < 3) avanzaPantalla(pantalla + 1);
-		if (ball->getPos().y > 370 && pantalla > 1) avanzaPantalla(pantalla - 1);
+		if (ball->getPos().y < 3) {
+			avanzaPantalla(pantalla + 1);
+			Game::instance().getEngine()->play2D("audio/smw_1-up.wav");
+		}
+		if (ball->getPos().y > 370 && pantalla > 1) {
+			avanzaPantalla(pantalla - 1);
+			Game::instance().getEngine()->play2D("audio/smw_koopa_kid_falls_into_lava.wav");
+		}
 		else if (ball->getPos().y > 370) die();
 		if (pantalla == 3 && ball->ganastebro()) {
 			if (nivel == 3) setNivel(1);
@@ -206,6 +217,7 @@ void Scene::setNivel(int n) {
 	if (n == 1) init();
 	else if (n == 2) createNivel2();
 	else if (n == 3) createNivel3();
+	if (alarma) ball->stopAlarma();
 	alarma = false;
 	vigilante->init(texProgram);
 }
@@ -282,7 +294,7 @@ void Scene::render()
 
 	text.render("ROOM:", glm::vec2(27 * map->getTileSize(), 22 * map->getTileSize() + 8), 32, glm::vec4(1, 1, 1, 1));
 	text.render(to_string(pantalla), glm::vec2(27 * map->getTileSize(), 24 * map->getTileSize() + 8), 32, glm::vec4(1, 1, 1, 1));
-
+	
 	if (restart) {
 		text.render("GAME OVER!", glm::vec2(10 * map->getTileSize(), 10 * map->getTileSize()), 64, glm::vec4(1, 0, 0, 1));
 		text.render("PRESS 'R' TO RESTART", glm::vec2(10 * map->getTileSize(), 14 * map->getTileSize()), 32, glm::vec4(1, 0, 0, 1));
@@ -307,6 +319,7 @@ void Scene::canviaPantalla(int n) {
 
 void Scene::god_mode() {
 	god = true;
+	ball->setGodMode(true);
 }
 
 
