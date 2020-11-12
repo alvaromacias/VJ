@@ -33,13 +33,13 @@ void Game::keyPressed(int key)
 		scene.canviaPantalla(2);
 	if (key == '3')
 		scene.canviaPantalla(3);
-	if (key == 'q')
+	if (key == 'q' || Game::instance().getKey('Q'))
 		scene.setNivel(1);
-	if (key == 'w')
+	if (key == 'w' || Game::instance().getKey('W'))
 		scene.setNivel(2);
-	if (key == 'e')
+	if (key == 'e' || Game::instance().getKey('E'))
 		scene.setNivel(3);
-	if (key == 'g')
+	if (key == 'g' || Game::instance().getKey('G'))
 		scene.god_mode();
 	keys[key] = true;
 }

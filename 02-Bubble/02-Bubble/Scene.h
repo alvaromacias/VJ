@@ -68,6 +68,12 @@ private:
 	bool god;
 	Text text;
 	bool restart;
+	Texture texs;
+	TexturedQuad *texQuad,*negroQuad;
+	bool menu;
+	bool instrucciones;
+	bool jugar;
+	bool creditos;
 };
 
 

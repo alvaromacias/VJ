@@ -24,9 +24,9 @@ void Ball::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 	speed = 3;
 }
 
-void Ball::update(int deltaTime, bool *alarma, int *money, int *points)
+void Ball::update(int deltaTime, bool *alarma, int *money, int *points, bool jugar)
 {
-	if (Game::instance().getKey(' ') || Game::instance().getSpecialKey(GLUT_KEY_LEFT) || Game::instance().getSpecialKey(GLUT_KEY_RIGHT) ||
+	if (jugar && Game::instance().getKey(' ') || Game::instance().getSpecialKey(GLUT_KEY_LEFT) || Game::instance().getSpecialKey(GLUT_KEY_RIGHT) ||
 		Game::instance().getSpecialKey(GLUT_KEY_UP) || Game::instance().getSpecialKey(GLUT_KEY_DOWN)) {
 		stopped = false;
 	}
