@@ -50,8 +50,14 @@ void Ball::update(int deltaTime, bool *alarma, int *money, int *points, bool jug
 				}
 				else if (block.getTipe() != 15 && !(*blocks)[i].resistencia()) {
 					if (block.getTipe() == 1 || block.getTipe() == 3 || block.getTipe() == 17 || block.getTipe() == 19) *points += 100;
-					else if (block.getTipe() == 5) *money += 100;
-					else if (block.getTipe() == 9) *money += 200;
+					else if (block.getTipe() == 5) {
+						*money += 100;
+						Game::instance().getEngine()->play2D("audio/coin.wav");
+					}
+					else if (block.getTipe() == 9) {
+						*money += 200;
+						Game::instance().getEngine()->play2D("audio/coin.wav");
+					}
 					else if (block.getTipe() == 11) {
 						*money += *points;
 						*points = 0;
@@ -73,8 +79,14 @@ void Ball::update(int deltaTime, bool *alarma, int *money, int *points, bool jug
 				}
 				else if (block.getTipe() != 15 && !(*blocks)[i].resistencia()) {
 					if (block.getTipe() == 1 || block.getTipe() == 3 || block.getTipe() == 17 || block.getTipe() == 19) *points += 100;
-					else if (block.getTipe() == 5) *money += 100;
-					else if (block.getTipe() == 9) *money += 200;
+					else if (block.getTipe() == 5) {
+						*money += 100;
+						Game::instance().getEngine()->play2D("audio/coin.wav");
+					}
+					else if (block.getTipe() == 9) {
+						*money += 200;
+						Game::instance().getEngine()->play2D("audio/coin.wav");
+					}
 					else if (block.getTipe() == 11) {
 						*money += *points;
 						*points = 0;
@@ -99,8 +111,14 @@ void Ball::update(int deltaTime, bool *alarma, int *money, int *points, bool jug
 				}
 				else if (block.getTipe() != 15 && !(*blocks)[i].resistencia()) {
 					if (block.getTipe() == 1 || block.getTipe() == 3 || block.getTipe() == 17 || block.getTipe() == 19) *points += 100;
-					else if (block.getTipe() == 5) *money += 100;
-					else if (block.getTipe() == 9) *money += 200;
+					else if (block.getTipe() == 5) {
+						*money += 100;
+						Game::instance().getEngine()->play2D("audio/coin.wav");
+					}
+					else if (block.getTipe() == 9) {
+						*money += 200;
+						Game::instance().getEngine()->play2D("audio/coin.wav");
+					}
 					else if (block.getTipe() == 11) {
 						*money += *points;
 						*points = 0;
@@ -122,8 +140,14 @@ void Ball::update(int deltaTime, bool *alarma, int *money, int *points, bool jug
 				}
 				else if (block.getTipe() != 15 && !(*blocks)[i].resistencia()) {
 					if (block.getTipe() == 1 || block.getTipe() == 3 || block.getTipe() == 17 || block.getTipe() == 19) *points += 100;
-					else if (block.getTipe() == 5) *money += 100;
-					else if (block.getTipe() == 9) *money += 200;
+					else if (block.getTipe() == 5) {
+						*money += 100;
+						Game::instance().getEngine()->play2D("audio/coin.wav");
+					}
+					else if (block.getTipe() == 9) {
+						*money += 200;
+						Game::instance().getEngine()->play2D("audio/coin.wav");
+					}
 					else if (block.getTipe() == 11) {
 						*money += *points;
 						*points = 0;
@@ -159,8 +183,14 @@ void Ball::update(int deltaTime, bool *alarma, int *money, int *points, bool jug
 				}
 				else if (block.getTipe() != 15 && !(*blocks)[i].resistencia()) {
 					if (block.getTipe() == 1 || block.getTipe() == 3 || block.getTipe() == 17 || block.getTipe() == 19) *points += 100;
-					else if (block.getTipe() == 5) *money += 100;
-					else if (block.getTipe() == 9) *money += 200;
+					else if (block.getTipe() == 5) {
+						*money += 100;
+						Game::instance().getEngine()->play2D("audio/coin.wav");
+					}
+					else if (block.getTipe() == 9) {
+						*money += 200;
+						Game::instance().getEngine()->play2D("audio/coin.wav");
+					}
 					else if (block.getTipe() == 11) {
 						*money += *points;
 						*points = 0;
@@ -182,8 +212,14 @@ void Ball::update(int deltaTime, bool *alarma, int *money, int *points, bool jug
 				}
 				else if (block.getTipe() != 15 && !(*blocks)[i].resistencia()) {
 					if (block.getTipe() == 1 || block.getTipe() == 3 || block.getTipe() == 17 || block.getTipe() == 19) *points += 100;
-					else if (block.getTipe() == 5) *money += 100;
-					else if (block.getTipe() == 9) *money += 200;
+					else if (block.getTipe() == 5) {
+						*money += 100;
+						Game::instance().getEngine()->play2D("audio/coin.wav");
+					}
+					else if (block.getTipe() == 9) {
+						*money += 200;
+						Game::instance().getEngine()->play2D("audio/coin.wav");
+					}
 					else if (block.getTipe() == 11) {
 						*money += *points;
 						*points = 0;
@@ -220,8 +256,14 @@ void Ball::update(int deltaTime, bool *alarma, int *money, int *points, bool jug
 				}
 				else if (block.getTipe() != 15 && !(*blocks)[i].resistencia()) {
 					if (block.getTipe() == 1 || block.getTipe() == 3 || block.getTipe() == 17 || block.getTipe() == 19) *points += 100;
-					else if (block.getTipe() == 5) *money += 100;
-					else if (block.getTipe() == 9) *money += 200;
+					else if (block.getTipe() == 5) {
+						*money += 100;
+						Game::instance().getEngine()->play2D("audio/coin.wav");
+					}
+					else if (block.getTipe() == 9) {
+						*money += 200;
+						Game::instance().getEngine()->play2D("audio/coin.wav");
+					}
 					else if (block.getTipe() == 11) {
 						*money += *points;
 						*points = 0;
@@ -243,8 +285,14 @@ void Ball::update(int deltaTime, bool *alarma, int *money, int *points, bool jug
 				}
 				else if (block.getTipe() != 15 && !(*blocks)[i].resistencia()) {
 					if (block.getTipe() == 1 || block.getTipe() == 3 || block.getTipe() == 17 || block.getTipe() == 19) *points += 100;
-					else if (block.getTipe() == 5) *money += 100;
-					else if (block.getTipe() == 9) *money += 200;
+					else if (block.getTipe() == 5) {
+						*money += 100;
+						Game::instance().getEngine()->play2D("audio/coin.wav");
+					}
+					else if (block.getTipe() == 9) {
+						*money += 200;
+						Game::instance().getEngine()->play2D("audio/coin.wav");
+					}
 					else if (block.getTipe() == 11) {
 						*money += *points;
 						*points = 0;
